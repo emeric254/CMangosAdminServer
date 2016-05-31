@@ -2,11 +2,13 @@
 
 *TODO description*
 
+
 ## dependencies
 
  * python
  * python-tornado
  * zeep
+
 
 ## How to
 
@@ -14,10 +16,20 @@
 
 *TODO*
 
+
 ### Configuration
 
 *TODO*
 
-### Usage
+#### CMangos : *mangosd.conf*
+
+*TODO*
+
+#### AdminServer
+
+*TODO*
+
+
+## Usage
 
 *TODO*
