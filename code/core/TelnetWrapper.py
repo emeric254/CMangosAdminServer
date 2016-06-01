@@ -7,7 +7,8 @@ class TelnetWrapper:
     """ Telnet based wrapper for CMaNGOS interaction
     """
     # TODO DOC
-    def __init__(self, host: str, port: str, user: str, pwd: str):
+    def __init__(self, host: str, port: str, user: str, pwd: str, log_level=logging.INFO):
+        logging.basicConfig(filename='../../wrapper.log', level=log_level)
         self.host = host
         self.port = port
         self.user = user
