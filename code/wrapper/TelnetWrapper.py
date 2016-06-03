@@ -191,7 +191,57 @@ class TelnetWrapper:
 
 # Send commands --------------------------------------------------------------------------------------------------------
 
-# TODO
+    def send_mail(self, character: str, subject: str = '', message: str = ''):
+        # TODO DOC
+        result = self.execute_command('send mail ' + character + ' "' + subject + '" "' + message + '" \n')
+        return 'Mail sent to ' in result
+
+    def send_mass_mail(self, mask: str, subject: str = '', message: str = ''):
+        # TODO DOC
+        result = self.execute_command('send mass mail ' + mask + ' "' + subject + '" "' + message + '" \n')
+        return 'Mail sent to ' in result
+
+    def send_money(self, character: str, money: int, subject: str = '', message: str = ''):
+        # TODO DOC
+        result = self.execute_command('send money ' + character +
+                                      ' "' + subject + '" "' + message + '" ' + str(money) + ' \n')
+        return 'Mail sent to ' in result
+
+    def send_mass_money(self, mask: str, money: int, subject: str = '', message: str = ''):
+        # TODO DOC
+        result = self.execute_command('send mass money ' + mask +
+                                      ' "' + subject + '" "' + message + '" ' + str(money) + ' \n')
+        return 'Mail sent to ' in result
+
+    def send_items(self, character: str, items: dict, subject: str = '', message: str = ''):
+        # TODO DOC
+        command = 'send items ' + character + ' "' + subject + '" "' + message + '"'
+        for item in items:
+            command += ' ' + str(item) + ':' + str(items[item])
+        command += ' \n'
+        result = self.execute_command(command)
+        return 'Mail sent to ' in result
+
+    def send_mass_items(self, mask: str, items: dict, subject: str = '', message: str = ''):
+        # TODO DOC
+        command = 'send mass items ' + mask + ' "' + subject + '" "' + message + '"'
+        for item in items:
+            command += ' ' + str(item) + ':' + str(items[item])
+        command += ' \n'
+        result = self.execute_command(command)
+        return 'Mail sent to ' in result
+
+    def send_announce(self, message: str):
+        # TODO DOC
+        self.execute_command('announce ' + message + ' \n')
+
+    def send_notification(self, message: str):
+        # TODO DOC
+        self.execute_command('notify ' + message + ' \n')
+
+    def send_message(self, character: str, message: str = ''):
+        # TODO DOC
+        self.execute_command('send message ' + character + ' "' + message + '" \n')
 
 # Server commands ------------------------------------------------------------------------------------------------------
 
@@ -210,11 +260,14 @@ class TelnetWrapper:
 
 
 tn = TelnetWrapper(host='10.0.0.125', port='3443', user='administrator', pwd='administrator')
-print(tn.account_create('test', 'test'))
-print(tn.account_set_password('test', '123456'))
-print(tn.account_set_addon('test', 3))
-print(tn.account_set_gm_level('test', 1))
-print(tn.get_online_accounts())
-print(tn.account_get_characters('test'))
-print(tn.account_delete('test'))
+# print(tn.account_create('test', 'test'))
+# print(tn.account_set_password('test', '123456'))
+# print(tn.account_set_addon('test', 3))
+# print(tn.account_set_gm_level('test', 1))
+# print(tn.send_items('arrandale', {27979: 1}), 'plop', 'message text')
+# print(tn.get_online_accounts())
+# print(tn.account_get_characters('test'))
+# print(tn.account_delete('test'))
+# tn.announce_chat('announce test')
+# tn.notify_online('notify test')
 tn.close()
