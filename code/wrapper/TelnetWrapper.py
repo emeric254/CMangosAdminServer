@@ -523,7 +523,35 @@ class TelnetWrapper:
 
 # Debug commands -------------------------------------------------------------------------------------------------------
 
-# TODO
+    def debug_toggle_arenas(self):
+        # TODO DOC
+        result = self.execute_command('debug arena \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def debug_toggle_battlegrounds(self):
+        # TODO DOC
+        result = self.execute_command('debug bg \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def debug_show_spell_coefs(self, spell_id: int):
+        # TODO DOC
+        result = self.execute_command('debug spellcoefs ' + str(spell_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def debug_mod_spells(self, spell_mask_bit_index: int, spell_mod_op: int, value: int, pct: bool = False):
+        # TODO DOC
+        command = 'debug spellmods '
+        if pct:
+            command += 'pct '
+        else:
+            command += 'flat '
+        command += str(spell_mask_bit_index) + ' ' + str(spell_mod_op) + ' ' + str(value) + ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
 
 # Ticket commands ------------------------------------------------------------------------------------------------------
 
