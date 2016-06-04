@@ -810,9 +810,35 @@ class TelnetWrapper:
 
 # NPC commands ---------------------------------------------------------------------------------------------------------
 
-# TODO
+    def npc_show_ai_infos(self):
+        # TODO DOC
+        result = self.execute_command('npc aiinfo \n')
+        print(result)  # TODO
+        return result  # TODO
 
-# Reload commands ------------------------------------------------------------------------------------------------------
+    def npc_delete(self, npc_id: int):
+        # TODO DOC
+        result = self.execute_command('npc delete ' + str(npc_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def npc_set_move_type(self, npc_id: int, stay: bool = False, random: bool = False,  delete_waypoints: bool = False):
+        # TODO DOC
+        command = 'npc setmovetype ' + str(npc_id) + ' '
+        if stay:
+            command += 'stay '
+        elif random:
+            command += 'random '
+        else:
+            command += 'way '
+        if not delete_waypoints:
+            command += 'NODEL '
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+# Dump commands ------------------------------------------------------------------------------------------------------
 
 # TODO
 
