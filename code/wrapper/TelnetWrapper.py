@@ -643,7 +643,35 @@ class TelnetWrapper:
 
 # Guild commands -------------------------------------------------------------------------------------------------------
 
-# TODO
+    def guild_create(self, guild_name: str, guild_leader: str = ''):
+        # TODO DOC
+        result = self.execute_command('guild create "' + guild_name + '" ' + guild_leader + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def guild_delete(self, guild_name: str):
+        # TODO DOC
+        result = self.execute_command('guild delete "' + guild_name + '" \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def guild_invite(self, character: str, guild_name: str):
+        # TODO DOC
+        result = self.execute_command('guild invite ' + character + ' "' + guild_name + '" \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def guild_character_set_rank(self, character: str, rank: int):
+        # TODO DOC
+        result = self.execute_command('guild rank ' + character + ' ' + str(rank) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def guild_uninvite(self, character: str):
+        # TODO DOC
+        result = self.execute_command('guild uninvite ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # Honor commands -------------------------------------------------------------------------------------------------------
 
