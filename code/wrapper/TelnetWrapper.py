@@ -65,9 +65,9 @@ class TelnetWrapper:
         result = self.execute_command('account onlinelist \n')
         result = result.replace('\\r', '').split('\\n')[3:-2]
         for account in result:
-            (id, username, character, ip, gm, expansion) = account[1:-1].split("|")
-            accounts[id.strip()] = {
-                'id': id.strip(),
+            (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
+            accounts[account_id.strip()] = {
+                'id': account_id.strip(),
                 'username': username.strip(),
                 'character': character.strip(),
                 'ip': ip.strip(),
@@ -484,6 +484,12 @@ class TelnetWrapper:
         print(result)  # TODO
         return result  # TODO
 
+    def character_levelup(self, character: str, level: int = 1):
+        # TODO DOC
+        result = self.execute_command('levelup ' + character + ' ' + str(level) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
     def character_restore_deleted(self, character: str, new_name: str = '', account: str = ''):
         # TODO DOC
         result = self.execute_command('character deleted restore ' + character +
@@ -675,11 +681,25 @@ class TelnetWrapper:
 
 # Honor commands -------------------------------------------------------------------------------------------------------
 
-# TODO
+    def honor_reset(self, character: str):
+        # TODO DOC
+        result = self.execute_command('reset honor ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # Learn commands -------------------------------------------------------------------------------------------------------
 
-# TODO
+    def learn_all_default(self, character: str):
+        # TODO DOC
+        result = self.execute_command('learn all_default ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def learn_all_for_gm(self):
+        # TODO DOC
+        result = self.execute_command('learn all_gm \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # List commands --------------------------------------------------------------------------------------------------------
 
