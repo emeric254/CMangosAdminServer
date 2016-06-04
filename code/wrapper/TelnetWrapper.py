@@ -344,7 +344,95 @@ class TelnetWrapper:
 
 # Ban commands ---------------------------------------------------------------------------------------------------------
 
-# TODO
+    def ban_account(self, username: str, reason: str, bantime: str = '-1'):
+        # TODO DOC
+        result = self.execute_command('ban account ' + username + ' ' + bantime + ' ' + reason + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ban_character(self, character: str, reason: str, bantime: str = '-1'):
+        # TODO DOC
+        result = self.execute_command('ban character ' + character + ' ' + bantime + ' ' + reason + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ban_ip(self, ip_addr: str, reason: str, bantime: str = '-1'):
+        # TODO DOC
+        result = self.execute_command('ban ip ' + ip_addr + ' ' + bantime + ' ' + reason + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ban_info_account(self, username: str):
+        # TODO DOC
+        result = self.execute_command('baninfo account ' + username + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ban_info_character(self, character: str):
+        # TODO DOC
+        result = self.execute_command('baninfo character ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ban_info_ip(self, ip_addr: str):
+        # TODO DOC
+        result = self.execute_command('baninfo ip ' + ip_addr + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ban_list_account(self):
+        # TODO DOC
+        result = self.execute_command('banlist account \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ban_list_character(self):
+        # TODO DOC
+        result = self.execute_command('banlist character \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ban_list_ip(self):
+        # TODO DOC
+        result = self.execute_command('banlist ip \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ban_list_search_account(self, username: str):
+        # TODO DOC
+        result = self.execute_command('banlist account ' + username + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ban_list_search_character(self, character: str):
+        # TODO DOC
+        result = self.execute_command('banlist character ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ban_list_search_ip(self, ip_addr: str):
+        # TODO DOC
+        result = self.execute_command('banlist ip ' + ip_addr + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def unban_account(self, username: str):
+        # TODO DOC
+        result = self.execute_command('unban account ' + username + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def unban_character(self, character: str):
+        # TODO DOC
+        result = self.execute_command('unban character ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def unban_ip(self, ip_addr: str):
+        # TODO DOC
+        result = self.execute_command('unban ip ' + ip_addr + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # Character commands ---------------------------------------------------------------------------------------------------
 
