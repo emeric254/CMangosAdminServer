@@ -555,7 +555,59 @@ class TelnetWrapper:
 
 # Ticket commands ------------------------------------------------------------------------------------------------------
 
-# TODO
+    def ticket_delete_all(self):
+        # TODO DOC
+        result = self.execute_command('delticket all \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ticket_delete(self, ticket_id: int):
+        # TODO DOC
+        result = self.execute_command('delticket ' + str(ticket_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ticket_delete_from_character(self, character: str):
+        # TODO DOC
+        result = self.execute_command('delticket ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ticket_gm_show_new_directly(self, activated: bool = True):
+        # TODO DOC
+        command = 'ticket '
+        if activated:
+            command += 'on'
+        else:
+            command += 'off '
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+    def ticket_show(self, ticket_id: int):
+        # TODO DOC
+        result = self.execute_command('ticket ' + str(ticket_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ticket_show_from_character(self, character: str):
+        # TODO DOC
+        result = self.execute_command('ticket ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ticket_respond(self, ticket_id: int, response: str):
+        # TODO DOC
+        result = self.execute_command('ticket respond ' + str(ticket_id) + ' ' + response + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ticket_respond_from_character(self, character: str, response: str):
+        # TODO DOC
+        result = self.execute_command('ticket respond ' + character + ' ' + response + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # Event commands -------------------------------------------------------------------------------------------------------
 
