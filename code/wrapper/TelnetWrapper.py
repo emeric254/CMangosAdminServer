@@ -611,7 +611,35 @@ class TelnetWrapper:
 
 # Event commands -------------------------------------------------------------------------------------------------------
 
-# TODO
+    def event_get_details(self, event_id: int):
+        # TODO DOC
+        result = self.execute_command('event ' + str(event_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def event_list(self):
+        # TODO DOC
+        result = self.execute_command('event list \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def event_start(self, event_id: int):
+        # TODO DOC
+        result = self.execute_command('event start ' + str(event_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def event_stop(self, event_id: int):
+        # TODO DOC
+        result = self.execute_command('event stop ' + str(event_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def event_search(self, event_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup event ' + str(event_name) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # Guild commands -------------------------------------------------------------------------------------------------------
 
