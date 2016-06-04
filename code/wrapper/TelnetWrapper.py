@@ -76,6 +76,11 @@ class TelnetWrapper:
             }
         return accounts
 
+    def account_get_infos(self, username: str):
+        result = self.execute_command('pinfo ' + username + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
     def account_get_characters(self, username: str):
         # TODO DOC
         characters = {}
@@ -330,7 +335,7 @@ class TelnetWrapper:
         return result  # TODO
 
     def auction_add_item_horde(self, item_id: int, item_count: int = 1, min_bid: int = 1, buy_out: int = None,
-                                  long_duration: bool = False, very_long_duration: bool = False):
+                               long_duration: bool = False, very_long_duration: bool = False):
         # TODO DOC
         command = 'auction item horde ' + str(item_id) + ':' + str(item_count) + ' '
         if buy_out:
@@ -347,7 +352,7 @@ class TelnetWrapper:
         return result  # TODO
 
     def auction_add_item_goblin(self, item_id: int, item_count: int = 1, min_bid: int = 1, buy_out: int = None,
-                                  long_duration: bool = False, very_long_duration: bool = False):
+                                long_duration: bool = False, very_long_duration: bool = False):
         # TODO DOC
         command = 'auction item goblin ' + str(item_id) + ':' + str(item_count) + ' '
         if buy_out:
@@ -511,6 +516,24 @@ class TelnetWrapper:
         print(result)  # TODO
         return result  # TODO
 
+    def character_mute(self, character: str, duration: int = 1):
+        # TODO DOC
+        result = self.execute_command('mute ' + character + ' ' + str(duration) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_unmute(self, character: str):
+        # TODO DOC
+        result = self.execute_command('unmute ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_recall(self, character: str):
+        # TODO DOC
+        result = self.execute_command('recall ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
     def character_restore_deleted(self, character: str, new_name: str = '', account: str = ''):
         # TODO DOC
         result = self.execute_command('character deleted restore ' + character +
@@ -545,6 +568,78 @@ class TelnetWrapper:
     def character_search_deleted_list(self, character: str):
         # TODO DOC
         result = self.execute_command('character deleted list ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_search_from_name(self, character: str, limit: int = 100):
+        # TODO DOC
+        result = self.execute_command('lookup player account ' + character + ' ' + str(limit) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_search_from_email(self, email: str, limit: int = 100):
+        # TODO DOC
+        result = self.execute_command('lookup player email ' + email + ' ' + str(limit) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_search_from_ip(self, ip_addr: str, limit: int = 100):
+        # TODO DOC
+        result = self.execute_command('lookup player ip ' + ip_addr + ' ' + str(limit) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_reset_achievements(self, character: str):
+        # TODO DOC
+        result = self.execute_command('reset achievements ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_reset_honor(self, character: str):
+        # TODO DOC
+        result = self.execute_command('reset honor ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_reset_level(self, character: str):
+        # TODO DOC
+        result = self.execute_command('reset level ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_reset_specs(self, character: str):
+        # TODO DOC
+        result = self.execute_command('reset specs ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_reset_spells(self, character: str):
+        # TODO DOC
+        result = self.execute_command('reset spells ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_reset_stats(self, character: str):
+        # TODO DOC
+        result = self.execute_command('reset stats ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_reset_talents(self, character: str):
+        # TODO DOC
+        result = self.execute_command('reset talents ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_all_reset_spells(self):
+        # TODO DOC
+        result = self.execute_command('reset all spells \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_all_reset_talents(self):
+        # TODO DOC
+        result = self.execute_command('reset all talents \n')
         print(result)  # TODO
         return result  # TODO
 
@@ -840,11 +935,18 @@ class TelnetWrapper:
 
 # Dump commands ------------------------------------------------------------------------------------------------------
 
-# TODO
+    def pdump_load(self, filename: str, username: str, newname: str = '', new_account_id: str = ''):
+        # TODO DOC
+        result = self.execute_command('pdump load ' + filename + ' ' + username +
+                                      ' ' + newname + ' ' + new_account_id + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
-# Reset commands -------------------------------------------------------------------------------------------------------
-
-# TODO
+    def pdump_write(self, filename: str, username: str):
+        # TODO DOC
+        result = self.execute_command('pdump write ' + filename + ' ' + username + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # Send commands --------------------------------------------------------------------------------------------------------
 
@@ -904,16 +1006,442 @@ class TelnetWrapper:
 
 # TODO
 
-    def shutdown_server(self, delay: int = 1):
+    def server_save_all(self):
         # TODO DOC
-        self.wait_cli_prompt()
-        logging.debug('Requesting server shutdown in ' + str(delay) + ' second(s)')
-        self.tn_client.write(b"server shutdown " + str(delay).encode('ascii') + b" \n")
-        self.close()
+        result = self.execute_command('saveall \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_idle_restart(self, delay: int = 1):
+        # TODO DOC
+        result = self.execute_command('server idlerestart ' + str(delay) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_cancel_idle_restart(self):
+        # TODO DOC
+        result = self.execute_command('server idlerestart cancel \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_idle_shutdown(self, delay: int = 1):
+        # TODO DOC
+        result = self.execute_command('server idleshutdown ' + str(delay) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_cancel_idle_shutdown(self):
+        # TODO DOC
+        result = self.execute_command('server idleshutdown cancel \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_get_infos(self):
+        # TODO DOC
+        result = self.execute_command('server info \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_get_log_filter(self):
+        # TODO DOC
+        result = self.execute_command('server log filter \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_set_log_filter(self, log_filter_name: str, activation: bool):
+        # TODO DOC
+        command = 'server log filter ' + log_filter_name + ' '
+        if activation:
+            command += 'on '
+        else:
+            command += 'off '
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_get_log_level(self):
+        # TODO DOC
+        result = self.execute_command('server log level \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_set_log_level(self, log_level: int):
+        # TODO DOC
+        result = self.execute_command('server log level ' + str(log_level) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_get_motd(self):
+        # TODO DOC
+        result = self.execute_command('server motd \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_set_motd(self, message: str):
+        # TODO DOC
+        result = self.execute_command('server set motd ' + message + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_restart(self, delay: int):
+        # TODO DOC
+        result = self.execute_command('server restart ' + str(delay) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_cancel_restart(self):
+        # TODO DOC
+        result = self.execute_command('server restart cancel \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_exit(self):
+        # TODO DOC
+        result = self.execute_command('server exit \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_shutdown(self, delay: int):
+        # TODO DOC
+        result = self.execute_command('server shutdown ' + str(delay) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_cancel_shutdown(self):
+        # TODO DOC
+        result = self.execute_command('server shutdown cancel \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_check_expired_corpses(self):
+        # TODO DOC
+        result = self.execute_command('server corpses \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_config(self):
+        # TODO DOC
+        result = self.execute_command('reload config \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_all(self):
+        # TODO DOC
+        result = self.execute_command('reload all \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_achievements(self):
+        # TODO DOC
+        result = self.execute_command('reload all_achievement \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_areas(self):
+        # TODO DOC
+        result = self.execute_command('reload all_area \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_eventais(self):
+        # TODO DOC
+        result = self.execute_command('reload all_eventai \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_items(self):
+        # TODO DOC
+        result = self.execute_command('reload all_item \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_locales(self):
+        # TODO DOC
+        result = self.execute_command('reload all_locales \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_loots(self):
+        # TODO DOC
+        result = self.execute_command('reload all_loot \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_npcs(self):
+        # TODO DOC
+        result = self.execute_command('reload all_npc \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_quests(self):
+        # TODO DOC
+        result = self.execute_command('reload all_quest \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_scripts(self):
+        # TODO DOC
+        result = self.execute_command('reload all_script \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reload_spells(self):
+        # TODO DOC
+        result = self.execute_command('reload all_spell \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_show_player_limits(self):
+        # TODO DOC
+        result = self.execute_command('server plimit \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_set_player_number_limit(self, number: int):
+        # TODO DOC
+        result = self.execute_command('server plimit ' + str(number) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_set_player_restrict_limit(self):
+        # TODO DOC
+        result = self.execute_command('server plimit player \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_set_moderator_restrict_limit(self):
+        # TODO DOC
+        result = self.execute_command('server plimit moderator \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_set_gamemaster_restrict_limit(self):
+        # TODO DOC
+        result = self.execute_command('server plimit gamemaster \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_set_administrator_restrict_limit(self):
+        # TODO DOC
+        result = self.execute_command('server plimit administrator \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_reset_player_limits(self):
+        # TODO DOC
+        result = self.execute_command('server plimit reset \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def server_load_scripts(self, script_library_name: str):
+        # TODO DOC
+        result = self.execute_command('loadscripts ' + script_library_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+# Gobject commands -----------------------------------------------------------------------------------------------------
+
+# TODO
+
+    def gobject_add(self, gobject_id: int, spawn_time: int):
+        # TODO DOC
+        result = self.execute_command('gobject add ' + str(gobject_id) + ' ' + str(spawn_time) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def gobject_delete(self, gobject_id: int):
+        # TODO DOC
+        result = self.execute_command('gobject delete ' + str(gobject_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def gobject_move(self, gobject_id: int, x_pos: int, y_pos: int, z_pos: int):
+        # TODO DOC
+        result = self.execute_command('gobject move ' + str(gobject_id) +
+                                      ' ' + str(x_pos) + ' ' + str(y_pos) + ' ' + str(z_pos) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def gobject_turn(self, gobject_id: int, z_angle: int):
+        # TODO DOC
+        result = self.execute_command('gobject turn ' + str(gobject_id) + ' ' + str(z_angle) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def gobject_set_phase_mask(self, gobject_id: int, phasemask: int):
+        # TODO DOC
+        result = self.execute_command('gobject setphase ' + str(gobject_id) + ' ' + str(phasemask) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def gobject_get_location(self, gobject_id: int):
+        # TODO DOC
+        result = self.execute_command('gobject target ' + str(gobject_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+# GM commands ----------------------------------------------------------------------------------------------------------
+
+# TODO
+
+    def gm_set_visiblity(self, visibility: bool = True):
+        # TODO DOC
+        command = 'gm visible '
+        if visibility:
+            command += 'on '
+        else:
+            command += 'off '
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+    def gm_set_fly(self, fly: bool = True):
+        # TODO DOC
+        command = 'gm fly '
+        if fly:
+            command += 'on '
+        else:
+            command += 'off '
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+    def gm_get_gm_mode(self):
+        result = self.execute_command('gm \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def gm_set_gm_mode(self, gm_mode: bool = True):
+        # TODO DOC
+        command = 'gm '
+        if gm_mode:
+            command += 'on '
+        else:
+            command += 'off '
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+    def gm_get_gm_mode_chat(self):
+        result = self.execute_command('gm chat \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def gm_set_gm_mode_chat(self, gm_mode_chat: bool = True):
+        # TODO DOC
+        command = 'gm chat '
+        if gm_mode_chat:
+            command += 'on '
+        else:
+            command += 'off '
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+    def gm_all_list(self):
+        # TODO DOC
+        result = self.execute_command('gm list \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def gm_ingame_list(self):
+        # TODO DOC
+        result = self.execute_command('gm ingame \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # Various commands -----------------------------------------------------------------------------------------------------
 
 # TODO
+
+    def list_all_talents(self):
+        # TODO DOC
+        result = self.execute_command('list talents \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def list_objects(self, object_id: int, limit: int = 10):
+        # TODO DOC
+        result = self.execute_command('list object ' + str(object_id) + ' ' + str(limit) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def list_items(self, item_id: int, limit: int = 10):
+        # TODO DOC
+        result = self.execute_command('list item ' + str(item_id) + ' ' + str(limit) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def list_creatures(self, creature_id: int, limit: int = 10):
+        # TODO DOC
+        result = self.execute_command('list item ' + str(creature_id) + ' ' + str(limit) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def pool_get_infos(self, pool_id: int):
+        # TODO DOC
+        result = self.execute_command('pool ' + str(pool_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def pool_get_list_spawned(self, pool_id: int):
+        # TODO DOC
+        result = self.execute_command('pool spawns ' + str(pool_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def title_set_mask(self, title_mask: str):
+        # TODO DOC
+        result = self.execute_command('titles setmask ' + title_mask + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def tele_delete(self, tele_name: str):
+        # TODO DOC
+        result = self.execute_command('tele del ' + tele_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def tele_character(self, tele_name: str, character: str):
+        # TODO DOC
+        result = self.execute_command('tele name ' + character + ' ' + tele_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def whispers_gm_accept(self, activation: bool = True):
+        # TODO DOC
+        command = 'whispers '
+        if activation:
+            command += 'on '
+        else:
+            command += 'off '
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+    def kick_character(self, character: str):
+        # TODO DOC
+        result = self.execute_command('kick ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def instance_get_infos(self):
+        # TODO DOC
+        result = self.execute_command('instance stats \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def arena_point_flush(self):
+        # TODO DOC
+        result = self.execute_command('flusharenapoints \n')
+        print(result)  # TODO
+        return result  # TODO
 
 
 tn = TelnetWrapper(host='10.0.0.125', port='3443', user='administrator', pwd='administrator')
