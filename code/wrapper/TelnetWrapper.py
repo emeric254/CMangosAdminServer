@@ -121,11 +121,32 @@ class TelnetWrapper:
         result = self.execute_command('account delete ' + username + ' \n')
         return 'Account deleted:' in result
 
+    def account_search_from_email(self, user_email: str, limit: int = 100):
+        # TODO DOC
+        result = self.execute_command('lookup account email ' + user_email + ' ' + str(limit) + ' \n')
+        return 'Account deleted:' in result
+
+    def account_search_from_name(self, username: str, limit: int = 100):
+        # TODO DOC
+        result = self.execute_command('lookup account name ' + username + ' ' + str(limit) + ' \n')
+        return 'Account deleted:' in result
+
+    def account_search_from_ip(self, ip_addr: str, limit: int = 100):
+        # TODO DOC
+        result = self.execute_command('lookup account ip ' + ip_addr + ' ' + str(limit) + ' \n')
+        return 'Account deleted:' in result
+
 # Achievement commands -------------------------------------------------------------------------------------------------
 
     def achievement_state(self, username: str, achievement_id: int):
         # TODO DOC
         result = self.execute_command('achievement ' + username + ' ' + str(achievement_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def achievement_search(self, achievement_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup achievement ' + achievement_name + ' \n')
         print(result)  # TODO
         return result  # TODO
 
@@ -701,13 +722,91 @@ class TelnetWrapper:
         print(result)  # TODO
         return result  # TODO
 
-# List commands --------------------------------------------------------------------------------------------------------
-
-# TODO
-
 # Lookup commands ------------------------------------------------------------------------------------------------------
 
-# TODO
+    def area_search(self, area_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup area ' + area_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def creature_search(self, creature_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup creature ' + creature_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def currency_search(self, currency_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup currency ' + currency_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def faction_search(self, faction_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup faction ' + faction_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def item_search(self, item_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup item ' + item_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def itemset_search(self, item_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup itemset ' + item_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def object_search(self, object_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup object ' + object_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def pool_search(self, pool_desc: str):
+        # TODO DOC
+        result = self.execute_command('lookup pool ' + pool_desc + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def quest_search(self, quest_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup quest ' + quest_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def skill_search(self, skill_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup skill ' + skill_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def spell_search(self, spell_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup spell ' + spell_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def taxinode_search(self, taxinode_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup taxinode ' + taxinode_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def tele_search(self, tele_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup tele ' + tele_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def title_search(self, title_name: str):
+        # TODO DOC
+        result = self.execute_command('lookup title ' + title_name + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # NPC commands ---------------------------------------------------------------------------------------------------------
 
