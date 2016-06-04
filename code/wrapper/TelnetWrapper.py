@@ -273,7 +273,74 @@ class TelnetWrapper:
 
 # Auction commands -----------------------------------------------------------------------------------------------------
 
-# TODO
+    def auction_show_alliance(self):
+        # TODO DOC
+        result = self.execute_command('auction alliance \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def auction_show_horde(self):
+        # TODO DOC
+        result = self.execute_command('auction horde \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def auction_show_goblin(self):
+        # TODO DOC
+        result = self.execute_command('auction goblin \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def auction_add_item_alliance(self, item_id: int, item_count: int = 1, min_bid: int = 1, buy_out: int = None,
+                                  long_duration: bool = False, very_long_duration: bool = False):
+        # TODO DOC
+        command = 'auction item alliance ' + str(item_id) + ':' + str(item_count) + ' '
+        if buy_out:
+            command += str(min_bid) + ' ' + str(buy_out) + ' '
+        if long_duration:
+            if very_long_duration:
+                command += 'very'
+            command += 'long'
+        else:
+            command += 'short'
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+    def auction_add_item_horde(self, item_id: int, item_count: int = 1, min_bid: int = 1, buy_out: int = None,
+                                  long_duration: bool = False, very_long_duration: bool = False):
+        # TODO DOC
+        command = 'auction item horde ' + str(item_id) + ':' + str(item_count) + ' '
+        if buy_out:
+            command += str(min_bid) + ' ' + str(buy_out) + ' '
+        if long_duration:
+            if very_long_duration:
+                command += 'very'
+            command += 'long'
+        else:
+            command += 'short'
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+    def auction_add_item_goblin(self, item_id: int, item_count: int = 1, min_bid: int = 1, buy_out: int = None,
+                                  long_duration: bool = False, very_long_duration: bool = False):
+        # TODO DOC
+        command = 'auction item goblin ' + str(item_id) + ':' + str(item_count) + ' '
+        if buy_out:
+            command += str(min_bid) + ' ' + str(buy_out) + ' '
+        if long_duration:
+            if very_long_duration:
+                command += 'very'
+            command += 'long'
+        else:
+            command += 'short'
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
 
 # Ban commands ---------------------------------------------------------------------------------------------------------
 
