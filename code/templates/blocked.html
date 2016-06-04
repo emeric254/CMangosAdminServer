@@ -9,12 +9,18 @@
     <body ng-app="MyApp" ng-cloak>
         <md-toolbar class="md-hue-2">
             <div class="md-toolbar-tools">
-                <h2> CMangosAdminServer </h2>
+                <h2>
+                    <md-icon md-font-library="material-icons" class="md-light md-48">settings_applications</md-icon>
+                    CMangosAdminServer
+                </h2>
             </div>
         </md-toolbar>
         <md-content class="md-padding" layout="column" layout-align="center center" layout-padding layout-margin>
+            <h2>
+                <md-icon md-font-library="material-icons" class="md-light md-64">pan_tool</md-icon>
+            </h2>
             <h3> You've been blocked for too many failed login attempts.</h3>
-            <p> Please wait {{ blocked_duration }} hours to be able to retry.</p>
+            <p> Block time is set to {{ blocked_duration }} day(s), please come back later to be able to retry.</p>
         </md-content>
         <!-- Angular Material requires Angular.js Libraries -->
         <script src="{{ static_url('js/angular.min.js') }}"></script>

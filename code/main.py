@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from core import confLoader
+from tools import confLoader
 from core import server
 from tornado import web, escape
 from core.APIHandler import APIHandler
@@ -21,7 +21,7 @@ logging.basicConfig(filename='../logs/CMangosAdminServer.log', level=logging.INF
     autoreload,
     max_attemps,
     blocked_duration
-) = confLoader.load_conf(conf_file='configuration.conf')
+) = confLoader.load_web_server_conf(conf_file='configuration.conf')
 
 
 class LoginHandler(server.BaseHandler):
@@ -30,29 +30,42 @@ class LoginHandler(server.BaseHandler):
     def get(self):
         """Get login form
         """
-        incorrect = self.get_secure_cookie("incorrect")
-        if incorrect and int(incorrect) > max_attemps:
-            logging.warning('an user have been blocked')
+        incorrect = self.get_secure_cookie('incorrect')
+        if incorrect and int(incorrect) >= max_attemps:
+            logging.warning('an user already blocked')
+            self.clear_cookie('user')
             self.render('blocked.html', blocked_duration=blocked_duration)
             return
-        self.render('login.html', user=self.current_user, failed=False)
+        self.render('login.html', failed=False)
 
     def post(self):
         """Post connection form and try to connect with these credentials
         """
-        getusername = escape.xhtml_escape(self.get_argument("username"))
-        getpassword = escape.xhtml_escape(self.get_argument("password"))
-        if login is getusername and password is getpassword:
-            self.set_secure_cookie("user", self.get_argument("username"), expires_days=1)
-            self.set_secure_cookie("incorrect", "0")
+        incorrect = self.get_secure_cookie('incorrect')
+        if not incorrect or int(incorrect) < 0:
+            incorrect = 0
+        elif int(incorrect) >= max_attemps:
+            logging.warning('an user is blocked')
+            self.clear_cookie('user')
+            self.render('blocked.html', blocked_duration=blocked_duration)
+            return
+        getusername = escape.xhtml_escape(self.get_argument('username'))
+        getpassword = escape.xhtml_escape(self.get_argument('password'))
+        if login == getusername and password == getpassword:
+            logging.info('right credentials')
+            self.set_secure_cookie('user', self.get_argument('username'), expires_days=1)
+            self.clear_cookie('incorrect')
             self.redirect('/')
         else:
             logging.info('invalid credentials')
-            incorrect = self.get_secure_cookie("incorrect")
-            if not incorrect:
-                incorrect = 0
-            self.set_secure_cookie('incorrect', str(int(incorrect) + 1), expires_days=1)
-            self.render('login.html', user=self.current_user, failed=True)
+            incorrect = int(incorrect) + 1
+            self.set_secure_cookie('incorrect', str(incorrect), expires_days=blocked_duration)
+            if incorrect >= max_attemps:
+                logging.warning('an user is now blocked')
+                self.clear_cookie('user')
+                self.render('blocked.html', blocked_duration=blocked_duration)
+            else:
+                self.render('login.html', failed=True)
 
 
 class LogoutHandler(server.BaseHandler):
@@ -75,7 +88,7 @@ class MainPageHandler(server.BaseHandler):
     async def get(self):
         """Render main page
         """
-        self.render('./admin.html')
+        self.render('./index.html')
 
 
 def main():

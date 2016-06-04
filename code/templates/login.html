@@ -9,13 +9,19 @@
     <body ng-app="MyApp" ng-cloak>
         <md-toolbar class="md-hue-2">
             <div class="md-toolbar-tools">
-                <h2> CMangosAdminServer </h2>
+                <h2>
+                    <md-icon md-font-library="material-icons" class="md-light md-48">settings_applications</md-icon>
+                    CMangosAdminServer
+                </h2>
             </div>
         </md-toolbar>
         <md-content class="md-padding" layout="column" layout-align="center center" layout-padding layout-margin>
             {% if failed %}
             <div class="md-whiteframe-z1" flex>
-                <h3> You provide wrong credentials ! </h3>
+                <h3>
+                    <md-icon md-font-library="material-icons" class="md-light md-48">pan_tool</md-icon>
+                    You provide wrong credentials !
+                </h3>
             </div>
             {% end %}
             <form name="connection" action="login" method="post">

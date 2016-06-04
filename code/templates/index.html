@@ -7,7 +7,6 @@
         <link rel="stylesheet" href="{{ static_url('css/material-icons.css') }}"/>
         <!-- dataTable -->
         <link rel="stylesheet" href="{{ static_url('css/dataTable.css') }}"/>
-        <link rel="stylesheet" href="{{ static_url('css/icons.css') }}"/>
         <!-- angular-chart -->
         <link rel="stylesheet" href="{{ static_url('css/angular-chart.min.css') }}"/>
     </head>
@@ -28,45 +27,37 @@
                         </md-menu-item>
                         <md-menu-item>
                             <md-button ng-click="help($event)">
-                                <div layout="row" flex>
-                                    <p flex> Help </p>
-                                    <md-icon md-font-library="material-icons" class="md-48">help</md-icon>
-                                </div>
+                                <p flex> Help <md-icon md-font-library="material-icons" class="md-48">help</md-icon> </p>
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
                             <md-button ng-href="/logout">
-                                <div layout="row" flex>
-                                    <p flex> Logout </p>
-                                    <md-icon md-font-library="material-icons" class="md-48">exit_to_app</md-icon>
-                                </div>
+                                <p flex> Logout <md-icon md-font-library="material-icons" class="md-48">exit_to_app</md-icon> </p>
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>
                 </md-menu>
             </div>
         </md-toolbar>
+
         <!-- -->
         <md-content layout="column">
             <section>
                 <md-subheader class="md-primary">
                     Status
                 </md-subheader>
-                <md-list layout-padding>
-                    <md-list-item class="md-3-line">
-                        <div class="md-list-item-text">
-                          <h3> test h3 1 </h3>
-                          <h4> test h4 1 </h4>
-                          <p>
-                            freagreagrae
-                          </p>
-                        </div>
-                    </md-list-item>
-                </md-list>
+                <div layout="row" layout-padding layout-align="center center">
+                    <md-whiteframe class="md-whiteframe-1dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
+                        The Alliance : <span ng-bind="online_alliance_players"></span>
+                    </md-whiteframe>
+                    <md-whiteframe class="md-whiteframe-1dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
+                        The Horde : <span ng-bind="online_horde_players"></span>
+                    </md-whiteframe>
+                </div>
                 <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="4" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px" >
                     <md-grid-tile md-rowspan="1" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
                         <canvas class="chart chart-line" chart-data="chartdata" chart-labels="chartlabels" chart-legend="true" chart-series="chartseries" chart-options="chartoptions" chart-colours="chartcolors"></canvas>
-                        <md-grid-tile-footer> <h3> Random </h3> </md-grid-tile-footer>
+                        <md-grid-tile-footer> <h3> Online Players </h3> </md-grid-tile-footer>
                     </md-grid-tile>
                     <md-grid-tile md-rowspan="1" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
                         <md-progress-linear md-mode="indeterminate"></md-progress-linear>
@@ -161,7 +152,7 @@
                     }
                 };
                 //
-                $scope.random_fct();
+                // $scope.random_fct();
             });
         </script>
     </body>

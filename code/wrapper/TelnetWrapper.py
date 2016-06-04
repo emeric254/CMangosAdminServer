@@ -123,15 +123,153 @@ class TelnetWrapper:
 
 # Achievement commands -------------------------------------------------------------------------------------------------
 
-# TODO
+    def achievement_state(self, username: str, achievement_id: int):
+        # TODO DOC
+        result = self.execute_command('achievement ' + username + ' ' + str(achievement_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
-# Item commands --------------------------------------------------------------------------------------------------------
+    def achievement_set_complete(self, username: str, achievement_id: int):
+        # TODO DOC
+        result = self.execute_command('achievement add ' + username + ' ' + str(achievement_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
-# TODO
+    def achievement_remove(self, username: str, achievement_id: int):
+        # TODO DOC
+        result = self.execute_command('achievement remove ' + username + ' ' + str(achievement_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def achievement_criteria_set_complete_progress(self, username: str, criteria_id: int):
+        # TODO DOC
+        result = self.execute_command('achievement criteria add ' + username + ' ' + str(criteria_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def achievement_criteria_add_progress(self, username: str, criteria_id: int, change: int):
+        # TODO DOC
+        result = self.execute_command('achievement criteria add ' + username +
+                                      ' ' + str(criteria_id) + ' ' + str(change) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def achievement_criteria_reset_progress(self, username: str, criteria_id: int):
+        # TODO DOC
+        result = self.execute_command('achievement criteria remove ' + username + ' ' + str(criteria_id) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def achievement_criteria_reduce_progress(self, username: str, criteria_id: int, change: int):
+        # TODO DOC
+        result = self.execute_command('achievement criteria remove ' + username +
+                                      ' ' + str(criteria_id) + ' ' + str(change) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # AHBot commands -------------------------------------------------------------------------------------------------------
 
-# TODO
+    def ahbot_reload_conf(self):
+        # TODO DOC
+        result = self.execute_command('ahbot reload \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_status(self, detailled: bool = False):
+        # TODO DOC
+        command = 'ahbot status '
+        if detailled:
+            command += 'all '
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_reset_auction(self, force_all_rebuild: bool = False):
+        # TODO DOC
+        command = 'ahbot rebuild '
+        if force_all_rebuild:
+            command += 'all '
+        command += ' \n'
+        result = self.execute_command(command)
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_all_quota(self, grey_items: int, white_items: int, green_items: int,
+                            blue_items: int, purple_items: int, orange_items: int, yellow_items: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items amount ' + str(grey_items) + ' ' + str(white_items) +
+                                      ' ' + str(green_items) + ' ' + str(blue_items) + ' ' + str(purple_items) +
+                                      ' ' + str(orange_items) + ' ' + str(yellow_items) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_grey_quota(self, grey_items: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items amount grey ' + str(grey_items) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_white_quota(self, white_items: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items amount white ' + str(white_items) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_green_quota(self, green_items: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items amount green ' + str(green_items) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_blue_quota(self, blue_items: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items amount blue ' + str(blue_items) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_purple_quota(self, purple_items: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items amount purple ' + str(purple_items) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_orange_quota(self, orange_items: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items amount orange ' + str(orange_items) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_yellow_quota(self, yellow_items: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items amount yellow ' + str(yellow_items) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_ratios(self, alliance_ratio: int, horde_ratio: int, neutral_ratio: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items ratio ' + str(alliance_ratio) +
+                                      ' ' + str(horde_ratio) + ' ' + str(neutral_ratio) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_alliance_ratio(self, alliance_ratio: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items ratio alliance ' + str(alliance_ratio) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_horde_ratio(self, horde_ratio: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items ratio horde ' + str(horde_ratio) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def ahbot_set_neutral_ratio(self, neutral_ratio: int):
+        # TODO DOC
+        result = self.execute_command('ahbot items ratio neutral ' + str(neutral_ratio) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # Auction commands -----------------------------------------------------------------------------------------------------
 
