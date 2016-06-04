@@ -436,7 +436,90 @@ class TelnetWrapper:
 
 # Character commands ---------------------------------------------------------------------------------------------------
 
-# TODO
+    def character_achievements(self, character: str):
+        # TODO DOC
+        result = self.execute_command('character achievements ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_customize_at_next_login(self, character: str):
+        # TODO DOC
+        result = self.execute_command('character customize ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_rename_at_next_login(self, character: str):
+        # TODO DOC
+        result = self.execute_command('character rename ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_delete(self, character: str):
+        # TODO DOC
+        result = self.execute_command('character erase ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_get_reputation(self, character: str):
+        # TODO DOC
+        result = self.execute_command('character reputation ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_get_titles(self, character: str):
+        # TODO DOC
+        result = self.execute_command('character titles ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_stop_combat(self, character: str):
+        # TODO DOC
+        result = self.execute_command('combatstop ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_set_level(self, character: str, level: int = 0):
+        # TODO DOC
+        result = self.execute_command('character level ' + character + ' ' + str(level) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_restore_deleted(self, character: str, new_name: str = '', account: str = ''):
+        # TODO DOC
+        result = self.execute_command('character deleted restore ' + character +
+                                      ' ' + new_name + ' ' + account + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_delete_deleted(self, character: str):
+        # TODO DOC
+        result = self.execute_command('character deleted delete ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_delete_deleted_old(self):
+        # TODO DOC
+        result = self.execute_command('character deleted old \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_delete_deleted_older_than(self, days: int):
+        # TODO DOC
+        result = self.execute_command('character deleted old ' + str(days) + ' \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_deleted_list(self):
+        # TODO DOC
+        result = self.execute_command('character deleted list \n')
+        print(result)  # TODO
+        return result  # TODO
+
+    def character_search_deleted_list(self, character: str):
+        # TODO DOC
+        result = self.execute_command('character deleted list ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
 # Debug commands -------------------------------------------------------------------------------------------------------
 
