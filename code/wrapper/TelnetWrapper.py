@@ -4,22 +4,50 @@ import telnetlib
 
 
 class TelnetWrapper:
-    """ Telnet based wrapper for CMaNGOS interaction
     """
-    # TODO DOC
+    Telnet based command wrapper for CMaNGOS
+
+    This class interact with a CMaNGOS server by Telnet connection.
+    Functions return a boolean statement or formatted data.
+    """
     def __init__(self, host: str, port: str, user: str, pwd: str, log_level=logging.INFO):
+        # TODO DOC
         logging.basicConfig(filename='../../wrapper.log', level=log_level)
         self.host = host
         self.port = port
         self.user = user
         self.pwd = pwd
-        logging.debug('Opening a Telnet session on ' + self.host + ':' + self.port)
-        self.tn_client = telnetlib.Telnet(host=host, port=port)
-        logging.info('Telnet client connected to ' + self.tn_client.host + ':' + self.tn_client.port)
+        self.tn_client = None
+        self.open_session()
         self.connect()
 
+    def is_session_open(self):
+        """
+        Return Telnet session state
+
+        True if session established, False otherwise
+        """
+        return self.tn_client is not None and self.tn_client.get_socket()
+
+    def open_session(self):
+        """
+        Try to open a Telnet session with the CMaNGOS server
+
+        Do nothing if already in a connected state
+        """
+        logging.info('Try to open a Telnet session on ' + self.host + ':' + self.port)
+        if not self.is_session_open():
+            self.tn_client = telnetlib.Telnet(host=self.host, port=self.port)
+            logging.info('Telnet client connected to ' + self.tn_client.host + ':' + self.tn_client.port)
+        else:
+            logging.info('Already connected to a Telnet session')
+
     def connect(self):
-        # TODO DOC
+        """
+        Try to login into CMaNGOS server cli prompt
+
+        Wait for credential questions and answer them with given ones.
+        """
         logging.debug('Waiting for username prompt')
         self.tn_client.read_until(b"Username:")
         logging.debug('Sending username : ' + self.user)
@@ -32,7 +60,11 @@ class TelnetWrapper:
         logging.info('Successfully connected as ' + self.user)
 
     def wait_cli_prompt(self):
-        # TODO DOC
+        """
+        Flush data stream before doing a command
+
+        Make sure there is no more data available to read
+        """
         logging.debug('Waiting for a ready cli prompt')
         self.tn_client.read_until(b"mangos>", timeout=0.2)
         logging.debug('Sending a newline character')
@@ -41,15 +73,36 @@ class TelnetWrapper:
         self.tn_client.read_until(b"mangos>")
         logging.debug('Cli prompt ready')
 
-    def close(self):
-        # TODO DOC
+    def disconnect(self):
+        """
+        Disconnect from CMaNGOS cli prompt
+
+        Send 'quit' command to disconnect from CMaNGOS cli prompt
+        """
         logging.debug('Disconnecting ' + self.user + '; exiting cli prompt')
         self.tn_client.write(b"quit \n")
+
+    def close_session(self):
+        """
+        Close the Telnet session
+        """
         logging.info('Closing Telnet connection to ' + self.host + ':' + self.port)
         self.tn_client.close()
 
+    def close(self):
+        """
+        Disconnect from CMaNGOS cli prompt and close Telnet session
+        """
+        self.disconnect()
+        self.close_session()
+
     def execute_command(self, command: str):
-        # TODO DOC
+        """
+        Execute a command into CMaNGOS cli prompt and return the result
+
+        Send command into CMaNGOS cli prompt and read answered data
+        :arg command 'str' to execute
+        """
         self.wait_cli_prompt()
         logging.info('Execute command : ' + command)
         self.tn_client.write(bytes(command, 'UTF-8'))
