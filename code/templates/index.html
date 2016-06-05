@@ -5,8 +5,6 @@
         <!-- Angular Material style sheet -->
         <link rel="stylesheet" href="{{ static_url('css/angular-material.min.css') }}"/>
         <link rel="stylesheet" href="{{ static_url('css/material-icons.css') }}"/>
-        <!-- dataTable -->
-        <link rel="stylesheet" href="{{ static_url('css/dataTable.css') }}"/>
         <!-- angular-chart -->
         <link rel="stylesheet" href="{{ static_url('css/angular-chart.min.css') }}"/>
     </head>
@@ -41,6 +39,9 @@
         </md-toolbar>
 
         <!-- -->
+        <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+
+        <!-- -->
         <md-content layout="column">
             <section>
                 <md-subheader class="md-primary">
@@ -60,8 +61,10 @@
                         <md-grid-tile-footer> <h3> Online Players </h3> </md-grid-tile-footer>
                     </md-grid-tile>
                     <md-grid-tile md-rowspan="1" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
-                        <md-progress-linear md-mode="indeterminate"></md-progress-linear>
-                        <md-grid-tile-footer> <h3> Loading </h3> </md-grid-tile-footer>
+                        <p>
+                           Some text
+                        </p>
+                        <md-grid-tile-footer> <h3> Test </h3> </md-grid-tile-footer>
                     </md-grid-tile>
                 </md-grid-list>
             </section>
@@ -89,14 +92,12 @@
         <script src="{{ static_url('js/angular-messages.min.js') }}"></script>
         <!-- Angular Material Library -->
         <script src="{{ static_url('js/angular-material.min.js') }}"></script>
-        <!-- DataTable for Angular Material -->
-        <script src="{{ static_url('js/dataTable.helpers.min.js') }}"></script>
         <!-- Graph for Angular Material -->
         <script src="{{ static_url('js/Chart.min.js') }}"></script>
         <script src="{{ static_url('js/angular-chart.min.js') }}"></script>
         <!-- Your application bootstrap  -->
         <script type="text/javascript">
-            var app = angular.module('MyApp', ['ngMaterial', 'ngMessages', 'data-table', 'chart.js']);
+            var app = angular.module('MyApp', ['ngMaterial', 'ngMessages', 'chart.js']);
 
             app.controller('AppCtrl', function($scope, $http, $mdDialog) {
                 $scope.help = function() {
