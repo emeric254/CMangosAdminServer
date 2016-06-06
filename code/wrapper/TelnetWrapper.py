@@ -129,11 +129,6 @@ class TelnetWrapper:
             }
         return accounts
 
-    def account_get_infos(self, username: str):
-        result = self.execute_command('pinfo ' + username + ' \n')
-        print(result)  # TODO
-        return result  # TODO
-
     def account_get_characters(self, username: str):
         # TODO DOC
         characters = {}
@@ -181,18 +176,54 @@ class TelnetWrapper:
 
     def account_search_from_email(self, user_email: str, limit: int = 100):
         # TODO DOC
+        accounts = {}
         result = self.execute_command('lookup account email ' + user_email + ' ' + str(limit) + ' \n')
-        return 'Account deleted:' in result
+        result = result.replace('\\r', '').split('\\n')[3:-2]
+        for account in result:
+            (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
+            accounts[account_id.strip()] = {
+                'id': account_id.strip(),
+                'username': username.strip(),
+                'character': character.strip(),
+                'ip': ip.strip(),
+                'gm': gm.strip(),
+                'expansion': expansion.strip()
+            }
+        return accounts
 
     def account_search_from_name(self, username: str, limit: int = 100):
         # TODO DOC
+        accounts = {}
         result = self.execute_command('lookup account name ' + username + ' ' + str(limit) + ' \n')
-        return 'Account deleted:' in result
+        result = result.replace('\\r', '').split('\\n')[3:-2]
+        for account in result:
+            (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
+            accounts[account_id.strip()] = {
+                'id': account_id.strip(),
+                'username': username.strip(),
+                'character': character.strip(),
+                'ip': ip.strip(),
+                'gm': gm.strip(),
+                'expansion': expansion.strip()
+            }
+        return accounts
 
     def account_search_from_ip(self, ip_addr: str, limit: int = 100):
         # TODO DOC
+        accounts = {}
         result = self.execute_command('lookup account ip ' + ip_addr + ' ' + str(limit) + ' \n')
-        return 'Account deleted:' in result
+        result = result.replace('\\r', '').split('\\n')[3:-2]
+        for account in result:
+            (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
+            accounts[account_id.strip()] = {
+                'id': account_id.strip(),
+                'username': username.strip(),
+                'character': character.strip(),
+                'ip': ip.strip(),
+                'gm': gm.strip(),
+                'expansion': expansion.strip()
+            }
+        return accounts
 
 # Achievement commands -------------------------------------------------------------------------------------------------
 
@@ -514,6 +545,11 @@ class TelnetWrapper:
         return result  # TODO
 
 # Character commands ---------------------------------------------------------------------------------------------------
+
+    def character_get_infos(self, character: str):
+        result = self.execute_command('pinfo ' + character + ' \n')
+        print(result)  # TODO
+        return result  # TODO
 
     def character_achievements(self, character: str):
         # TODO DOC
