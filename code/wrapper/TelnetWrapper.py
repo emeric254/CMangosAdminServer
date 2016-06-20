@@ -26,6 +26,7 @@ class TelnetWrapper:
         Return Telnet session state
 
         True if session established, False otherwise
+        :return: True if the session is opened with the CMaNGOS server
         """
         return self.tn_client is not None and self.tn_client.get_socket()
 
@@ -102,6 +103,7 @@ class TelnetWrapper:
 
         Send command into CMaNGOS cli prompt and read answered data
         :arg command 'str' to execute
+        :return: True on success, False otherwise
         """
         self.wait_cli_prompt()
         logging.info('Execute command : ' + command)
@@ -113,7 +115,11 @@ class TelnetWrapper:
 # Account commands -----------------------------------------------------------------------------------------------------
 
     def get_online_accounts(self):
-        # TODO DOC
+        """
+        Get currently online accounts
+
+        :return: currently connected account as a dict
+        """
         accounts = {}
         result = self.execute_command('account onlinelist \n')
         result = result.replace('\\r', '').split('\\n')[3:-2]
@@ -130,7 +136,12 @@ class TelnetWrapper:
         return accounts
 
     def account_get_characters(self, username: str):
-        # TODO DOC
+        """
+        Get account characters as a list
+
+        :param username: account name
+        :return: account characters as a dict
+        """
         characters = {}
         result = self.execute_command('account characters ' + username + ' \n')
         result = result.replace('\\r', '').split('\\n')[3:-2]
@@ -146,36 +157,71 @@ class TelnetWrapper:
         return characters
 
     def account_create(self, username: str, password: str):
-        # TODO DOC
+        """
+        Create a new account with a login and a password
+
+        :param username: new account login
+        :param password: new account password
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('account create ' + username + ' ' + password + ' \n')
         return 'Account with this name already exist' not in result
 
     def account_set_password(self, username: str, password: str):
-        # TODO DOC
+        """
+        Replace an account password with a new one
+
+        :param username: account login
+        :param password: new account password
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('account set password ' + username + ' ' + password + ' ' + password + ' \n')
         return 'The password was changed' in result
 
     def account_set_addon(self, username: str, addon: int):
-        # TODO DOC
+        """
+        Set expansion access to an account
+
+        :param username: account login
+        :param addon: expansion id (0, 1, 2 ...)
+        :return: True on success, False otherwise
+        """
         if addon < 0:
             return False  # wrong value
         result = self.execute_command('account set addon ' + username + ' ' + str(addon) + ' \n')
         return 'has been granted ' + str(addon) + ' expansion rights.' in result
 
     def account_set_gm_level(self, username: str, gm_level: int):
-        # TODO DOC
+        """
+        Set account permission level
+
+        :param username: account login
+        :param gm_level: gm level (0: player, 1: modo, 2: gm, 3: admin)
+        :return: True on success, False otherwise
+        """
         if gm_level < 0 or gm_level > 3:
             return False  # wrong value
         result = self.execute_command('account set gmlevel ' + username + ' ' + str(gm_level) + ' \n')
         return 'You change security level of account ' in result
 
     def account_delete(self, username: str):
-        # TODO DOC
+        """
+        Delete an account
+
+        :param username: account login
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('account delete ' + username + ' \n')
         return 'Account deleted:' in result
 
     def account_search_from_email(self, user_email: str, limit: int = 100):
-        # TODO DOC
+        """
+        Search in accounts corresponding email (or fragment)
+
+        :param user_email: account email (or a fragment) to search from
+        :param limit: result number limit
+        :return: found accounts as a map
+        """
         accounts = {}
         result = self.execute_command('lookup account email ' + user_email + ' ' + str(limit) + ' \n')
         result = result.replace('\\r', '').split('\\n')[3:-2]
@@ -192,7 +238,13 @@ class TelnetWrapper:
         return accounts
 
     def account_search_from_name(self, username: str, limit: int = 100):
-        # TODO DOC
+        """
+        Search in accounts corresponding login (or fragment)
+
+        :param username: account login (or a fragment) to search from
+        :param limit: result number limit
+        :return: found accounts as a map
+        """
         accounts = {}
         result = self.execute_command('lookup account name ' + username + ' ' + str(limit) + ' \n')
         result = result.replace('\\r', '').split('\\n')[3:-2]
@@ -209,7 +261,13 @@ class TelnetWrapper:
         return accounts
 
     def account_search_from_ip(self, ip_addr: str, limit: int = 100):
-        # TODO DOC
+        """
+        Search in accounts corresponding last used ip address (or fragment)
+
+        :param ip_addr: account last used ip address (or a fragment) to search from
+        :param limit: result number limit
+        :return: found accounts as a map
+        """
         accounts = {}
         result = self.execute_command('lookup account ip ' + ip_addr + ' ' + str(limit) + ' \n')
         result = result.replace('\\r', '').split('\\n')[3:-2]
@@ -1537,10 +1595,12 @@ tn = TelnetWrapper(host='10.0.0.125', port='3443', user='administrator', pwd='ad
 # print(tn.account_create('test', 'test'))
 # print(tn.account_set_password('test', '123456'))
 # print(tn.account_set_addon('test', 3))
-# print(tn.account_set_gm_level('test', 1))
-# print(tn.send_items('arrandale', {27979: 1}), 'plop', 'message text')
+# print(tn.account_set_gm_level('test', 0))
+# print(tn.send_items('yolo', {27979: 1}), 'plop', 'message text')
 # print(tn.get_online_accounts())
-# print(tn.account_get_characters('test'))
+# print(tn.account_search_from_email('test'))
+# print(tn.account_search_from_ip('10.0.0.1'))
+# print(tn.account_search_from_name('test'))
 # print(tn.account_delete('test'))
 # tn.announce_chat('announce test')
 # tn.notify_online('notify test')
