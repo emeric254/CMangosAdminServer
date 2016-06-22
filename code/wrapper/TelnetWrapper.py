@@ -285,52 +285,66 @@ class TelnetWrapper:
 
 # Achievement commands -------------------------------------------------------------------------------------------------
 
-    def achievement_state(self, username: str, achievement_id: int):
-        # TODO DOC
-        result = self.execute_command('achievement ' + username + ' ' + str(achievement_id) + ' \n')
-        print(result)  # TODO
+    def achievement_details(self, achievement_id: int):
+        """
+        Get details about an achievement
+
+        :param achievement_id: the achievement id
+        :return: details about the acvhievement
+        """
+        result = self.execute_command('achievement ' + str(achievement_id) + ' \n')
         return result  # TODO
 
     def achievement_search(self, achievement_name: str):
-        # TODO DOC
+        """
+        Search in achievements with a name (or a fragment)
+
+        :param achievement_name: name to lookup (or a fragment)
+        :return: list of achievement results
+        """
         result = self.execute_command('lookup achievement ' + achievement_name + ' \n')
+        return result  # TODO
+
+    def achievement_state(self, character: str, achievement_id: int):
+        # TODO DOC
+        result = self.execute_command('achievement ' + character + ' ' + str(achievement_id) + ' \n')
         print(result)  # TODO
         return result  # TODO
 
-    def achievement_set_complete(self, username: str, achievement_id: int):
+    def achievement_set_complete(self, character: str, achievement_id: int):
         # TODO DOC
-        result = self.execute_command('achievement add ' + username + ' ' + str(achievement_id) + ' \n')
+        result = self.execute_command('achievement add ' + character + ' ' + str(achievement_id) + ' \n')
         print(result)  # TODO
         return result  # TODO
 
-    def achievement_remove(self, username: str, achievement_id: int):
+    def achievement_remove(self, character: str, achievement_id: int):
         # TODO DOC
-        result = self.execute_command('achievement remove ' + username + ' ' + str(achievement_id) + ' \n')
+        result = self.execute_command('achievement remove ' + character + ' ' + str(achievement_id) + ' \n')
         print(result)  # TODO
         return result  # TODO
 
-    def achievement_criteria_set_complete_progress(self, username: str, criteria_id: int):
+    def achievement_criteria_set_complete_progress(self, character: str, criteria_id: int):
         # TODO DOC
-        result = self.execute_command('achievement criteria add ' + username + ' ' + str(criteria_id) + ' \n')
+        result = self.execute_command('achievement criteria add ' + character + ' ' + str(criteria_id) + ' \n')
         print(result)  # TODO
         return result  # TODO
 
-    def achievement_criteria_add_progress(self, username: str, criteria_id: int, change: int):
+    def achievement_criteria_add_progress(self, character: str, criteria_id: int, change: int):
         # TODO DOC
-        result = self.execute_command('achievement criteria add ' + username +
+        result = self.execute_command('achievement criteria add ' + character +
                                       ' ' + str(criteria_id) + ' ' + str(change) + ' \n')
         print(result)  # TODO
         return result  # TODO
 
-    def achievement_criteria_reset_progress(self, username: str, criteria_id: int):
+    def achievement_criteria_reset_progress(self, character: str, criteria_id: int):
         # TODO DOC
-        result = self.execute_command('achievement criteria remove ' + username + ' ' + str(criteria_id) + ' \n')
+        result = self.execute_command('achievement criteria remove ' + character + ' ' + str(criteria_id) + ' \n')
         print(result)  # TODO
         return result  # TODO
 
-    def achievement_criteria_reduce_progress(self, username: str, criteria_id: int, change: int):
+    def achievement_criteria_reduce_progress(self, character: str, criteria_id: int, change: int):
         # TODO DOC
-        result = self.execute_command('achievement criteria remove ' + username +
+        result = self.execute_command('achievement criteria remove ' + character +
                                       ' ' + str(criteria_id) + ' ' + str(change) + ' \n')
         print(result)  # TODO
         return result  # TODO
@@ -338,10 +352,13 @@ class TelnetWrapper:
 # AHBot commands -------------------------------------------------------------------------------------------------------
 
     def ahbot_reload_conf(self):
-        # TODO DOC
+        """
+        Reload AHBot configuration
+
+        :return: True if success, False otherwise
+        """
         result = self.execute_command('ahbot reload \n')
-        print(result)  # TODO
-        return result  # TODO
+        return 'All config are reloaded from ahbot configuration file.' in result
 
     def ahbot_status(self, detailled: bool = False):
         # TODO DOC
@@ -1591,17 +1608,39 @@ class TelnetWrapper:
         return result  # TODO
 
 
+#
 tn = TelnetWrapper(host='10.0.0.125', port='3443', user='administrator', pwd='administrator')
+
 # print(tn.account_create('test', 'test'))
 # print(tn.account_set_password('test', '123456'))
 # print(tn.account_set_addon('test', 3))
 # print(tn.account_set_gm_level('test', 0))
 # print(tn.send_items('yolo', {27979: 1}), 'plop', 'message text')
 # print(tn.get_online_accounts())
-# print(tn.account_search_from_email('test'))
-# print(tn.account_search_from_ip('10.0.0.1'))
-# print(tn.account_search_from_name('test'))
 # print(tn.account_delete('test'))
-# tn.announce_chat('announce test')
-# tn.notify_online('notify test')
+
+# tn.send_announce('announce test')
+# tn.send_notification('notify test')
+
+# print(tn.account_search_from_name('alex'))
+# print(tn.account_get_characters('alex'))
+
+tn.character_get_infos('Petroska')
+
+# print(tn.achievement_search('Niveau'))
+# print(tn.achievement_details(44))
+
+# print(tn.ahbot_reload_conf())
+print(tn.ahbot_status(True))
+
 tn.close()
+
+'''
+def achievement_criteria_set_complete_progress(self, username: str, criteria_id: int)
+
+def achievement_criteria_add_progress(self, username: str, criteria_id: int, change: int)
+
+def achievement_criteria_reset_progress(self, username: str, criteria_id: int)
+
+def achievement_criteria_reduce_progress(self, username: str, criteria_id: int, change: int)
+'''
