@@ -647,8 +647,7 @@ class TelnetWrapper:
     def character_delete(self, character: str):
         # TODO DOC
         result = self.execute_command('character erase ' + character + ' \n')
-        print(result)  # TODO
-        return result  # TODO
+        return ') deleted' in result
 
     def character_get_reputation(self, character: str):
         # TODO DOC
@@ -1099,18 +1098,30 @@ class TelnetWrapper:
 
 # Dump commands ------------------------------------------------------------------------------------------------------
 
-    def pdump_load(self, filename: str, username: str, newname: str = '', new_account_id: str = ''):
-        # TODO DOC
-        result = self.execute_command('pdump load ' + filename + ' ' + username +
-                                      ' ' + newname + ' ' + new_account_id + ' \n')
-        print(result)  # TODO
-        return result  # TODO
+    def dump_character_import(self, dump_file: str, account_name: str, new_id: int, character_name: str):
+        """
+        Import a character from a dump file
 
-    def pdump_write(self, filename: str, username: str):
-        # TODO DOC
-        result = self.execute_command('pdump write ' + filename + ' ' + username + ' \n')
-        print(result)  # TODO
-        return result  # TODO
+        :param dump_file: file name to import from
+        :param account_name: account to import into
+        :param new_id: new id for the imported character
+        :param character_name: name for the imported character
+        :return: True on import success
+        """
+        result = self.execute_command('pdump load ' + dump_file + ' ' + account_name +
+                                      ' ' + character_name + ' ' + str(new_id) + ' \n')
+        return 'Character loaded successfully!' in result
+
+    def dump_character_export(self, dump_file: str, character: str):
+        """
+        Export a character to a dump file.
+
+        :param dump_file: export file name
+        :param character: character name to export
+        :return: True on export success
+        """
+        result = self.execute_command('pdump write ' + dump_file + ' ' + character + ' \n')
+        return 'Character dumped successfully!' in result
 
 # Send commands --------------------------------------------------------------------------------------------------------
 
@@ -1632,6 +1643,10 @@ tn.character_get_infos('Petroska')
 
 # print(tn.ahbot_reload_conf())
 print(tn.ahbot_status(True))
+
+# print(tn.dump_character_export('test_file.dump', 'Petroska'))
+# print(tn.dump_character_import('test_file.dump', 'alex', 50, 'Petroska'))
+# print(tn.character_delete('Petroska'))
 
 tn.close()
 
