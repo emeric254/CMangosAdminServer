@@ -109,7 +109,7 @@ class TelnetWrapper:
         self.wait_cli_prompt()
         logging.info('Execute command : ' + command)
         self.tn_client.write(bytes(command, 'UTF-8'))
-        result = str(self.tn_client.read_until(b"mangos>"))
+        result = str(self.tn_client.read_until(b"mangos>")).replace('\\r', '')  # can remove '\r' char here
         logging.debug('Response ' + result)
         return result
 
@@ -123,7 +123,7 @@ class TelnetWrapper:
         """
         accounts = {}
         result = self.execute_command('account onlinelist \n')
-        result = result.replace('\\r', '').split('\\n')[3:-2]
+        result = result.split('\\n')[3:-2]
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
@@ -145,7 +145,7 @@ class TelnetWrapper:
         """
         characters = {}
         result = self.execute_command('account characters ' + username + ' \n')
-        result = result.replace('\\r', '').split('\\n')[3:-2]
+        result = result.split('\\n')[3:-2]
         for character in result:
             (guid, char_name, char_race, char_class, char_level) = character[1:-1].split("|")
             characters[guid.strip()] = {
@@ -225,7 +225,7 @@ class TelnetWrapper:
         """
         accounts = {}
         result = self.execute_command('lookup account email ' + user_email + ' ' + str(limit) + ' \n')
-        result = result.replace('\\r', '').split('\\n')[3:-2]
+        result = result.split('\\n')[3:-2]
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
@@ -248,7 +248,7 @@ class TelnetWrapper:
         """
         accounts = {}
         result = self.execute_command('lookup account name ' + username + ' ' + str(limit) + ' \n')
-        result = result.replace('\\r', '').split('\\n')[3:-2]
+        result = result.split('\\n')[3:-2]
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
@@ -271,7 +271,7 @@ class TelnetWrapper:
         """
         accounts = {}
         result = self.execute_command('lookup account ip ' + ip_addr + ' ' + str(limit) + ' \n')
-        result = result.replace('\\r', '').split('\\n')[3:-2]
+        result = result.split('\\n')[3:-2]
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
