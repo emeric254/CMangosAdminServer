@@ -875,12 +875,21 @@ class TelnetWrapper:
 # Learn commands -------------------------------------------------------------------------------------------------------
 
     def learn_all_default(self, character: str):
-        # TODO DOC
+        """
+        Make a character all its spells learned (race, class and rewards).
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('learn all_default ' + character + ' \n')
         return result  # TODO
 
     def learn_all_for_gm(self):
-        # TODO DOC
+        """
+        Make all Game Masters all their spells learned (race, class and rewards).
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('learn all_gm \n')
         return result  # TODO
 
@@ -959,26 +968,43 @@ class TelnetWrapper:
 # NPC commands ---------------------------------------------------------------------------------------------------------
 
     def npc_show_ai_infos(self):
-        # TODO DOC
+        """
+        Get NPC AI and scripts informations.
+
+        :return: NPC AI and scripts informations
+        """
         result = self.execute_command('npc aiinfo \n')
         return result  # TODO
 
     def npc_delete(self, npc_id: int):
-        # TODO DOC
+        """
+        Delete a NPC.
+
+        :param npc_id: NPC id to delete
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('npc delete ' + str(npc_id) + ' \n')
         return result  # TODO
 
     def npc_set_move_type(self, npc_id: int, stay: bool = False, random: bool = False,  delete_waypoints: bool = False):
-        # TODO DOC
+        """
+        Modify movements from a NPC.
+
+        :param npc_id: target NPC id
+        :param stay: make NPC static
+        :param random: make NPC movements random
+        :param delete_waypoints: want to delete NPC waypoints ?
+        :return: True on success, False otherwise
+        """
         command = 'npc setmovetype ' + str(npc_id) + ' '
         if stay:
-            command += 'stay '
+            command += 'stay '  # static
         elif random:
-            command += 'random '
+            command += 'random '  # random movement
         else:
-            command += 'way '
-        if not delete_waypoints:
-            command += 'NODEL '
+            command += 'way '  # follow its waypoints
+        if not delete_waypoints:  # don't delete waypoint
+            command += 'NODEL '  # keep waypoint
         command += ' \n'
         result = self.execute_command(command)
         return result  # TODO
