@@ -1013,29 +1013,67 @@ class TelnetWrapper:
 # Send commands --------------------------------------------------------------------------------------------------------
 
     def send_mail(self, character: str, subject: str = '', message: str = ''):
-        # TODO DOC
+        """
+        Send an ingame mail to a character.
+
+        :param character: target character
+        :param subject: ingame mail subject
+        :param message: ingame mail content
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('send mail ' + character + ' "' + subject + '" "' + message + '" \n')
         return 'Mail sent to ' in result
 
     def send_mass_mail(self, mask: str, subject: str = '', message: str = ''):
-        # TODO DOC
+        """
+        Send an ingame mail to many characters.
+
+        :param mask: character name mask to target
+        :param subject: ingame mail subject
+        :param message: ingame mail content
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('send mass mail ' + mask + ' "' + subject + '" "' + message + '" \n')
         return 'Mail sent to ' in result
 
     def send_money(self, character: str, money: int, subject: str = '', message: str = ''):
-        # TODO DOC
+        """
+        Send an ingame mail with money attached to a character.
+
+        :param character: target character
+        :param money: money amount to send
+        :param subject: ingame mail subject
+        :param message: ingame mail content
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('send money ' + character +
                                       ' "' + subject + '" "' + message + '" ' + str(money) + ' \n')
         return 'Mail sent to ' in result
 
     def send_mass_money(self, mask: str, money: int, subject: str = '', message: str = ''):
-        # TODO DOC
+        """
+        Send an ingame mail with money attached to many characters.
+
+        :param mask: character name mask to target
+        :param money: money amount to send
+        :param subject: ingame mail subject
+        :param message: ingame mail content
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('send mass money ' + mask +
                                       ' "' + subject + '" "' + message + '" ' + str(money) + ' \n')
         return 'Mail sent to ' in result
 
     def send_items(self, character: str, items: dict, subject: str = '', message: str = ''):
-        # TODO DOC
+        """
+        Send an ingame mail with one or more objects attached to a character.
+
+        :param character: target character
+        :param items: object(s) to send
+        :param subject: ingame mail subject
+        :param message: ingame mail content
+        :return: True on success, False otherwise
+        """
         command = 'send items ' + character + ' "' + subject + '" "' + message + '"'
         for item in items:
             command += ' ' + str(item) + ':' + str(items[item])
@@ -1044,7 +1082,15 @@ class TelnetWrapper:
         return 'Mail sent to ' in result
 
     def send_mass_items(self, mask: str, items: dict, subject: str = '', message: str = ''):
-        # TODO DOC
+        """
+        Send an ingame mail with one or more objects attached to many characters.
+
+        :param mask: character name mask to target
+        :param items: object(s) to send
+        :param subject: ingame mail subject
+        :param message: ingame mail content
+        :return: True on success, False otherwise
+        """
         command = 'send mass items ' + mask + ' "' + subject + '" "' + message + '"'
         for item in items:
             command += ' ' + str(item) + ':' + str(items[item])
@@ -1053,15 +1099,31 @@ class TelnetWrapper:
         return 'Mail sent to ' in result
 
     def send_announce(self, message: str):
-        # TODO DOC
+        """
+        Send a announce to all online players.
+
+        It'll be displayed in the tchat box
+        :param message: message to announce to all online players
+        """
         self.execute_command('announce ' + message + ' \n')
 
     def send_notification(self, message: str):
-        # TODO DOC
+        """
+        Notify all online players.
+
+        It'll be displayed on the top of the screen
+        :param message: message to notify to all online players
+        """
         self.execute_command('notify ' + message + ' \n')
 
     def send_message(self, character: str, message: str = ''):
-        # TODO DOC
+        """
+        Send a announce to a character (online player).
+
+        It'll be displayed in the tchat box
+        :param character: target online character
+        :param message: message to announce at this player
+        """
         self.execute_command('send message ' + character + ' "' + message + '" \n')
 
 # Server commands ------------------------------------------------------------------------------------------------------
@@ -1071,43 +1133,36 @@ class TelnetWrapper:
     def server_save_all(self):
         # TODO DOC
         result = self.execute_command('saveall \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_idle_restart(self, delay: int = 1):
         # TODO DOC
         result = self.execute_command('server idlerestart ' + str(delay) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_cancel_idle_restart(self):
         # TODO DOC
         result = self.execute_command('server idlerestart cancel \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_idle_shutdown(self, delay: int = 1):
         # TODO DOC
         result = self.execute_command('server idleshutdown ' + str(delay) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_cancel_idle_shutdown(self):
         # TODO DOC
         result = self.execute_command('server idleshutdown cancel \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_get_infos(self):
         # TODO DOC
         result = self.execute_command('server info \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_get_log_filter(self):
         # TODO DOC
         result = self.execute_command('server log filter \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_set_log_filter(self, log_filter_name: str, activation: bool):
@@ -1119,187 +1174,156 @@ class TelnetWrapper:
             command += 'off '
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
     def server_get_log_level(self):
         # TODO DOC
         result = self.execute_command('server log level \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_set_log_level(self, log_level: int):
         # TODO DOC
         result = self.execute_command('server log level ' + str(log_level) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_get_motd(self):
         # TODO DOC
         result = self.execute_command('server motd \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_set_motd(self, message: str):
         # TODO DOC
         result = self.execute_command('server set motd ' + message + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_restart(self, delay: int):
         # TODO DOC
         result = self.execute_command('server restart ' + str(delay) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_cancel_restart(self):
         # TODO DOC
         result = self.execute_command('server restart cancel \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_exit(self):
         # TODO DOC
         result = self.execute_command('server exit \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_shutdown(self, delay: int):
         # TODO DOC
         result = self.execute_command('server shutdown ' + str(delay) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_cancel_shutdown(self):
         # TODO DOC
         result = self.execute_command('server shutdown cancel \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_check_expired_corpses(self):
         # TODO DOC
         result = self.execute_command('server corpses \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_config(self):
         # TODO DOC
         result = self.execute_command('reload config \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_all(self):
         # TODO DOC
         result = self.execute_command('reload all \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_achievements(self):
         # TODO DOC
         result = self.execute_command('reload all_achievement \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_areas(self):
         # TODO DOC
         result = self.execute_command('reload all_area \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_eventais(self):
         # TODO DOC
         result = self.execute_command('reload all_eventai \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_items(self):
         # TODO DOC
         result = self.execute_command('reload all_item \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_locales(self):
         # TODO DOC
         result = self.execute_command('reload all_locales \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_loots(self):
         # TODO DOC
         result = self.execute_command('reload all_loot \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_npcs(self):
         # TODO DOC
         result = self.execute_command('reload all_npc \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_quests(self):
         # TODO DOC
         result = self.execute_command('reload all_quest \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_scripts(self):
         # TODO DOC
         result = self.execute_command('reload all_script \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reload_spells(self):
         # TODO DOC
         result = self.execute_command('reload all_spell \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_show_player_limits(self):
         # TODO DOC
         result = self.execute_command('server plimit \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_set_player_number_limit(self, number: int):
         # TODO DOC
         result = self.execute_command('server plimit ' + str(number) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_set_player_restrict_limit(self):
         # TODO DOC
         result = self.execute_command('server plimit player \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_set_moderator_restrict_limit(self):
         # TODO DOC
         result = self.execute_command('server plimit moderator \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_set_gamemaster_restrict_limit(self):
         # TODO DOC
         result = self.execute_command('server plimit gamemaster \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_set_administrator_restrict_limit(self):
         # TODO DOC
         result = self.execute_command('server plimit administrator \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_reset_player_limits(self):
         # TODO DOC
         result = self.execute_command('server plimit reset \n')
-        print(result)  # TODO
         return result  # TODO
 
     def server_load_scripts(self, script_library_name: str):
         # TODO DOC
         result = self.execute_command('loadscripts ' + script_library_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
 # Gobject commands -----------------------------------------------------------------------------------------------------
@@ -1309,38 +1333,32 @@ class TelnetWrapper:
     def gobject_add(self, gobject_id: int, spawn_time: int):
         # TODO DOC
         result = self.execute_command('gobject add ' + str(gobject_id) + ' ' + str(spawn_time) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def gobject_delete(self, gobject_id: int):
         # TODO DOC
         result = self.execute_command('gobject delete ' + str(gobject_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def gobject_move(self, gobject_id: int, x_pos: int, y_pos: int, z_pos: int):
         # TODO DOC
         result = self.execute_command('gobject move ' + str(gobject_id) +
                                       ' ' + str(x_pos) + ' ' + str(y_pos) + ' ' + str(z_pos) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def gobject_turn(self, gobject_id: int, z_angle: int):
         # TODO DOC
         result = self.execute_command('gobject turn ' + str(gobject_id) + ' ' + str(z_angle) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def gobject_set_phase_mask(self, gobject_id: int, phasemask: int):
         # TODO DOC
         result = self.execute_command('gobject setphase ' + str(gobject_id) + ' ' + str(phasemask) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def gobject_get_location(self, gobject_id: int):
         # TODO DOC
         result = self.execute_command('gobject target ' + str(gobject_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
 # GM commands ----------------------------------------------------------------------------------------------------------
@@ -1356,7 +1374,6 @@ class TelnetWrapper:
             command += 'off '
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
     def gm_set_fly(self, fly: bool = True):
@@ -1368,12 +1385,10 @@ class TelnetWrapper:
             command += 'off '
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
     def gm_get_gm_mode(self):
         result = self.execute_command('gm \n')
-        print(result)  # TODO
         return result  # TODO
 
     def gm_set_gm_mode(self, gm_mode: bool = True):
@@ -1385,12 +1400,10 @@ class TelnetWrapper:
             command += 'off '
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
     def gm_get_gm_mode_chat(self):
         result = self.execute_command('gm chat \n')
-        print(result)  # TODO
         return result  # TODO
 
     def gm_set_gm_mode_chat(self, gm_mode_chat: bool = True):
@@ -1402,19 +1415,16 @@ class TelnetWrapper:
             command += 'off '
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
     def gm_all_list(self):
         # TODO DOC
         result = self.execute_command('gm list \n')
-        print(result)  # TODO
         return result  # TODO
 
     def gm_ingame_list(self):
         # TODO DOC
         result = self.execute_command('gm ingame \n')
-        print(result)  # TODO
         return result  # TODO
 
 # Various commands -----------------------------------------------------------------------------------------------------
@@ -1424,55 +1434,46 @@ class TelnetWrapper:
     def list_all_talents(self):
         # TODO DOC
         result = self.execute_command('list talents \n')
-        print(result)  # TODO
         return result  # TODO
 
     def list_objects(self, object_id: int, limit: int = 10):
         # TODO DOC
         result = self.execute_command('list object ' + str(object_id) + ' ' + str(limit) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def list_items(self, item_id: int, limit: int = 10):
         # TODO DOC
         result = self.execute_command('list item ' + str(item_id) + ' ' + str(limit) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def list_creatures(self, creature_id: int, limit: int = 10):
         # TODO DOC
         result = self.execute_command('list item ' + str(creature_id) + ' ' + str(limit) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def pool_get_infos(self, pool_id: int):
         # TODO DOC
         result = self.execute_command('pool ' + str(pool_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def pool_get_list_spawned(self, pool_id: int):
         # TODO DOC
         result = self.execute_command('pool spawns ' + str(pool_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def title_set_mask(self, title_mask: str):
         # TODO DOC
         result = self.execute_command('titles setmask ' + title_mask + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def tele_delete(self, tele_name: str):
         # TODO DOC
         result = self.execute_command('tele del ' + tele_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def tele_character(self, tele_name: str, character: str):
         # TODO DOC
         result = self.execute_command('tele name ' + character + ' ' + tele_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def whispers_gm_accept(self, activation: bool = True):
@@ -1484,25 +1485,21 @@ class TelnetWrapper:
             command += 'off '
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
     def kick_character(self, character: str):
         # TODO DOC
         result = self.execute_command('kick ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def instance_get_infos(self):
         # TODO DOC
         result = self.execute_command('instance stats \n')
-        print(result)  # TODO
         return result  # TODO
 
     def arena_point_flush(self):
         # TODO DOC
         result = self.execute_command('flusharenapoints \n')
-        print(result)  # TODO
         return result  # TODO
 
 
