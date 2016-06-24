@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import logging
 import telnetlib
@@ -108,7 +109,7 @@ class TelnetWrapper:
         self.wait_cli_prompt()
         logging.info('Execute command : ' + command)
         self.tn_client.write(bytes(command, 'UTF-8'))
-        result = str(self.tn_client.read_until(b"mangos>"))
+        result = str(self.tn_client.read_until(b"mangos>")).replace('\\r', '')  # can remove '\r' char here
         logging.debug('Response ' + result)
         return result
 
@@ -122,7 +123,7 @@ class TelnetWrapper:
         """
         accounts = {}
         result = self.execute_command('account onlinelist \n')
-        result = result.replace('\\r', '').split('\\n')[3:-2]
+        result = result.split('\\n')[3:-2]
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
@@ -144,7 +145,7 @@ class TelnetWrapper:
         """
         characters = {}
         result = self.execute_command('account characters ' + username + ' \n')
-        result = result.replace('\\r', '').split('\\n')[3:-2]
+        result = result.split('\\n')[3:-2]
         for character in result:
             (guid, char_name, char_race, char_class, char_level) = character[1:-1].split("|")
             characters[guid.strip()] = {
@@ -224,7 +225,7 @@ class TelnetWrapper:
         """
         accounts = {}
         result = self.execute_command('lookup account email ' + user_email + ' ' + str(limit) + ' \n')
-        result = result.replace('\\r', '').split('\\n')[3:-2]
+        result = result.split('\\n')[3:-2]
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
@@ -247,7 +248,7 @@ class TelnetWrapper:
         """
         accounts = {}
         result = self.execute_command('lookup account name ' + username + ' ' + str(limit) + ' \n')
-        result = result.replace('\\r', '').split('\\n')[3:-2]
+        result = result.split('\\n')[3:-2]
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
@@ -270,7 +271,7 @@ class TelnetWrapper:
         """
         accounts = {}
         result = self.execute_command('lookup account ip ' + ip_addr + ' ' + str(limit) + ' \n')
-        result = result.replace('\\r', '').split('\\n')[3:-2]
+        result = result.split('\\n')[3:-2]
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
@@ -308,45 +309,38 @@ class TelnetWrapper:
     def achievement_state(self, character: str, achievement_id: int):
         # TODO DOC
         result = self.execute_command('achievement ' + character + ' ' + str(achievement_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def achievement_set_complete(self, character: str, achievement_id: int):
         # TODO DOC
         result = self.execute_command('achievement add ' + character + ' ' + str(achievement_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def achievement_remove(self, character: str, achievement_id: int):
         # TODO DOC
         result = self.execute_command('achievement remove ' + character + ' ' + str(achievement_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def achievement_criteria_set_complete_progress(self, character: str, criteria_id: int):
         # TODO DOC
         result = self.execute_command('achievement criteria add ' + character + ' ' + str(criteria_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def achievement_criteria_add_progress(self, character: str, criteria_id: int, change: int):
         # TODO DOC
         result = self.execute_command('achievement criteria add ' + character +
                                       ' ' + str(criteria_id) + ' ' + str(change) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def achievement_criteria_reset_progress(self, character: str, criteria_id: int):
         # TODO DOC
         result = self.execute_command('achievement criteria remove ' + character + ' ' + str(criteria_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def achievement_criteria_reduce_progress(self, character: str, criteria_id: int, change: int):
         # TODO DOC
         result = self.execute_command('achievement criteria remove ' + character +
                                       ' ' + str(criteria_id) + ' ' + str(change) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
 # AHBot commands -------------------------------------------------------------------------------------------------------
@@ -367,7 +361,6 @@ class TelnetWrapper:
             command += 'all '
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_reset_auction(self, force_all_rebuild: bool = False):
@@ -377,7 +370,6 @@ class TelnetWrapper:
             command += 'all '
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_all_quota(self, grey_items: int, white_items: int, green_items: int,
@@ -386,74 +378,62 @@ class TelnetWrapper:
         result = self.execute_command('ahbot items amount ' + str(grey_items) + ' ' + str(white_items) +
                                       ' ' + str(green_items) + ' ' + str(blue_items) + ' ' + str(purple_items) +
                                       ' ' + str(orange_items) + ' ' + str(yellow_items) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_grey_quota(self, grey_items: int):
         # TODO DOC
         result = self.execute_command('ahbot items amount grey ' + str(grey_items) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_white_quota(self, white_items: int):
         # TODO DOC
         result = self.execute_command('ahbot items amount white ' + str(white_items) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_green_quota(self, green_items: int):
         # TODO DOC
         result = self.execute_command('ahbot items amount green ' + str(green_items) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_blue_quota(self, blue_items: int):
         # TODO DOC
         result = self.execute_command('ahbot items amount blue ' + str(blue_items) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_purple_quota(self, purple_items: int):
         # TODO DOC
         result = self.execute_command('ahbot items amount purple ' + str(purple_items) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_orange_quota(self, orange_items: int):
         # TODO DOC
         result = self.execute_command('ahbot items amount orange ' + str(orange_items) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_yellow_quota(self, yellow_items: int):
         # TODO DOC
         result = self.execute_command('ahbot items amount yellow ' + str(yellow_items) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_ratios(self, alliance_ratio: int, horde_ratio: int, neutral_ratio: int):
         # TODO DOC
         result = self.execute_command('ahbot items ratio ' + str(alliance_ratio) +
                                       ' ' + str(horde_ratio) + ' ' + str(neutral_ratio) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_alliance_ratio(self, alliance_ratio: int):
         # TODO DOC
         result = self.execute_command('ahbot items ratio alliance ' + str(alliance_ratio) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_horde_ratio(self, horde_ratio: int):
         # TODO DOC
         result = self.execute_command('ahbot items ratio horde ' + str(horde_ratio) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ahbot_set_neutral_ratio(self, neutral_ratio: int):
         # TODO DOC
         result = self.execute_command('ahbot items ratio neutral ' + str(neutral_ratio) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
 # Auction commands -----------------------------------------------------------------------------------------------------
@@ -461,19 +441,16 @@ class TelnetWrapper:
     def auction_show_alliance(self):
         # TODO DOC
         result = self.execute_command('auction alliance \n')
-        print(result)  # TODO
         return result  # TODO
 
     def auction_show_horde(self):
         # TODO DOC
         result = self.execute_command('auction horde \n')
-        print(result)  # TODO
         return result  # TODO
 
     def auction_show_goblin(self):
         # TODO DOC
         result = self.execute_command('auction goblin \n')
-        print(result)  # TODO
         return result  # TODO
 
     def auction_add_item_alliance(self, item_id: int, item_count: int = 1, min_bid: int = 1, buy_out: int = None,
@@ -490,7 +467,6 @@ class TelnetWrapper:
             command += 'short'
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
     def auction_add_item_horde(self, item_id: int, item_count: int = 1, min_bid: int = 1, buy_out: int = None,
@@ -507,7 +483,6 @@ class TelnetWrapper:
             command += 'short'
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
     def auction_add_item_goblin(self, item_id: int, item_count: int = 1, min_bid: int = 1, buy_out: int = None,
@@ -524,7 +499,6 @@ class TelnetWrapper:
             command += 'short'
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
 # Ban commands ---------------------------------------------------------------------------------------------------------
@@ -532,116 +506,97 @@ class TelnetWrapper:
     def ban_account(self, username: str, reason: str, bantime: str = '-1'):
         # TODO DOC
         result = self.execute_command('ban account ' + username + ' ' + bantime + ' ' + reason + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ban_character(self, character: str, reason: str, bantime: str = '-1'):
         # TODO DOC
         result = self.execute_command('ban character ' + character + ' ' + bantime + ' ' + reason + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ban_ip(self, ip_addr: str, reason: str, bantime: str = '-1'):
         # TODO DOC
         result = self.execute_command('ban ip ' + ip_addr + ' ' + bantime + ' ' + reason + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ban_info_account(self, username: str):
         # TODO DOC
         result = self.execute_command('baninfo account ' + username + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ban_info_character(self, character: str):
         # TODO DOC
         result = self.execute_command('baninfo character ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ban_info_ip(self, ip_addr: str):
         # TODO DOC
         result = self.execute_command('baninfo ip ' + ip_addr + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ban_list_account(self):
         # TODO DOC
         result = self.execute_command('banlist account \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ban_list_character(self):
         # TODO DOC
         result = self.execute_command('banlist character \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ban_list_ip(self):
         # TODO DOC
         result = self.execute_command('banlist ip \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ban_list_search_account(self, username: str):
         # TODO DOC
         result = self.execute_command('banlist account ' + username + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ban_list_search_character(self, character: str):
         # TODO DOC
         result = self.execute_command('banlist character ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ban_list_search_ip(self, ip_addr: str):
         # TODO DOC
         result = self.execute_command('banlist ip ' + ip_addr + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def unban_account(self, username: str):
         # TODO DOC
         result = self.execute_command('unban account ' + username + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def unban_character(self, character: str):
         # TODO DOC
         result = self.execute_command('unban character ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def unban_ip(self, ip_addr: str):
         # TODO DOC
         result = self.execute_command('unban ip ' + ip_addr + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
 # Character commands ---------------------------------------------------------------------------------------------------
 
     def character_get_infos(self, character: str):
         result = self.execute_command('pinfo ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_achievements(self, character: str):
         # TODO DOC
         result = self.execute_command('character achievements ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_customize_at_next_login(self, character: str):
         # TODO DOC
         result = self.execute_command('character customize ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_rename_at_next_login(self, character: str):
         # TODO DOC
         result = self.execute_command('character rename ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_delete(self, character: str):
@@ -652,158 +607,132 @@ class TelnetWrapper:
     def character_get_reputation(self, character: str):
         # TODO DOC
         result = self.execute_command('character reputation ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_get_titles(self, character: str):
         # TODO DOC
         result = self.execute_command('character titles ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_stop_combat(self, character: str):
         # TODO DOC
         result = self.execute_command('combatstop ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_set_level(self, character: str, level: int = 0):
         # TODO DOC
         result = self.execute_command('character level ' + character + ' ' + str(level) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_levelup(self, character: str, level: int = 1):
         # TODO DOC
         result = self.execute_command('levelup ' + character + ' ' + str(level) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_mute(self, character: str, duration: int = 1):
         # TODO DOC
         result = self.execute_command('mute ' + character + ' ' + str(duration) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_unmute(self, character: str):
         # TODO DOC
         result = self.execute_command('unmute ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_recall(self, character: str):
         # TODO DOC
         result = self.execute_command('recall ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_restore_deleted(self, character: str, new_name: str = '', account: str = ''):
         # TODO DOC
         result = self.execute_command('character deleted restore ' + character +
                                       ' ' + new_name + ' ' + account + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_delete_deleted(self, character: str):
         # TODO DOC
         result = self.execute_command('character deleted delete ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_delete_deleted_old(self):
         # TODO DOC
         result = self.execute_command('character deleted old \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_delete_deleted_older_than(self, days: int):
         # TODO DOC
         result = self.execute_command('character deleted old ' + str(days) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_deleted_list(self):
         # TODO DOC
         result = self.execute_command('character deleted list \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_search_deleted_list(self, character: str):
         # TODO DOC
         result = self.execute_command('character deleted list ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_search_from_name(self, character: str, limit: int = 100):
         # TODO DOC
         result = self.execute_command('lookup player account ' + character + ' ' + str(limit) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_search_from_email(self, email: str, limit: int = 100):
         # TODO DOC
         result = self.execute_command('lookup player email ' + email + ' ' + str(limit) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_search_from_ip(self, ip_addr: str, limit: int = 100):
         # TODO DOC
         result = self.execute_command('lookup player ip ' + ip_addr + ' ' + str(limit) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_reset_achievements(self, character: str):
         # TODO DOC
         result = self.execute_command('reset achievements ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_reset_honor(self, character: str):
         # TODO DOC
         result = self.execute_command('reset honor ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_reset_level(self, character: str):
         # TODO DOC
         result = self.execute_command('reset level ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_reset_specs(self, character: str):
         # TODO DOC
         result = self.execute_command('reset specs ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_reset_spells(self, character: str):
         # TODO DOC
         result = self.execute_command('reset spells ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_reset_stats(self, character: str):
         # TODO DOC
         result = self.execute_command('reset stats ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_reset_talents(self, character: str):
         # TODO DOC
         result = self.execute_command('reset talents ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_all_reset_spells(self):
         # TODO DOC
         result = self.execute_command('reset all spells \n')
-        print(result)  # TODO
         return result  # TODO
 
     def character_all_reset_talents(self):
         # TODO DOC
         result = self.execute_command('reset all talents \n')
-        print(result)  # TODO
         return result  # TODO
 
 # Debug commands -------------------------------------------------------------------------------------------------------
@@ -811,19 +740,16 @@ class TelnetWrapper:
     def debug_toggle_arenas(self):
         # TODO DOC
         result = self.execute_command('debug arena \n')
-        print(result)  # TODO
         return result  # TODO
 
     def debug_toggle_battlegrounds(self):
         # TODO DOC
         result = self.execute_command('debug bg \n')
-        print(result)  # TODO
         return result  # TODO
 
     def debug_show_spell_coefs(self, spell_id: int):
         # TODO DOC
         result = self.execute_command('debug spellcoefs ' + str(spell_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def debug_mod_spells(self, spell_mask_bit_index: int, spell_mod_op: int, value: int, pct: bool = False):
@@ -835,7 +761,6 @@ class TelnetWrapper:
             command += 'flat '
         command += str(spell_mask_bit_index) + ' ' + str(spell_mod_op) + ' ' + str(value) + ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
 # Ticket commands ------------------------------------------------------------------------------------------------------
@@ -843,19 +768,16 @@ class TelnetWrapper:
     def ticket_delete_all(self):
         # TODO DOC
         result = self.execute_command('delticket all \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ticket_delete(self, ticket_id: int):
         # TODO DOC
         result = self.execute_command('delticket ' + str(ticket_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ticket_delete_from_character(self, character: str):
         # TODO DOC
         result = self.execute_command('delticket ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ticket_gm_show_new_directly(self, activated: bool = True):
@@ -867,31 +789,26 @@ class TelnetWrapper:
             command += 'off '
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
     def ticket_show(self, ticket_id: int):
         # TODO DOC
         result = self.execute_command('ticket ' + str(ticket_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ticket_show_from_character(self, character: str):
         # TODO DOC
         result = self.execute_command('ticket ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ticket_respond(self, ticket_id: int, response: str):
         # TODO DOC
         result = self.execute_command('ticket respond ' + str(ticket_id) + ' ' + response + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def ticket_respond_from_character(self, character: str, response: str):
         # TODO DOC
         result = self.execute_command('ticket respond ' + character + ' ' + response + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
 # Event commands -------------------------------------------------------------------------------------------------------
@@ -899,31 +816,26 @@ class TelnetWrapper:
     def event_get_details(self, event_id: int):
         # TODO DOC
         result = self.execute_command('event ' + str(event_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def event_list(self):
         # TODO DOC
         result = self.execute_command('event list \n')
-        print(result)  # TODO
         return result  # TODO
 
     def event_start(self, event_id: int):
         # TODO DOC
         result = self.execute_command('event start ' + str(event_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def event_stop(self, event_id: int):
         # TODO DOC
         result = self.execute_command('event stop ' + str(event_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def event_search(self, event_name: str):
         # TODO DOC
         result = self.execute_command('lookup event ' + str(event_name) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
 # Guild commands -------------------------------------------------------------------------------------------------------
@@ -931,31 +843,26 @@ class TelnetWrapper:
     def guild_create(self, guild_name: str, guild_leader: str = ''):
         # TODO DOC
         result = self.execute_command('guild create "' + guild_name + '" ' + guild_leader + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def guild_delete(self, guild_name: str):
         # TODO DOC
         result = self.execute_command('guild delete "' + guild_name + '" \n')
-        print(result)  # TODO
         return result  # TODO
 
     def guild_invite(self, character: str, guild_name: str):
         # TODO DOC
         result = self.execute_command('guild invite ' + character + ' "' + guild_name + '" \n')
-        print(result)  # TODO
         return result  # TODO
 
     def guild_character_set_rank(self, character: str, rank: int):
         # TODO DOC
         result = self.execute_command('guild rank ' + character + ' ' + str(rank) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def guild_uninvite(self, character: str):
         # TODO DOC
         result = self.execute_command('guild uninvite ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
 # Honor commands -------------------------------------------------------------------------------------------------------
@@ -963,7 +870,6 @@ class TelnetWrapper:
     def honor_reset(self, character: str):
         # TODO DOC
         result = self.execute_command('reset honor ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
 # Learn commands -------------------------------------------------------------------------------------------------------
@@ -971,13 +877,11 @@ class TelnetWrapper:
     def learn_all_default(self, character: str):
         # TODO DOC
         result = self.execute_command('learn all_default ' + character + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def learn_all_for_gm(self):
         # TODO DOC
         result = self.execute_command('learn all_gm \n')
-        print(result)  # TODO
         return result  # TODO
 
 # Lookup commands ------------------------------------------------------------------------------------------------------
@@ -985,85 +889,71 @@ class TelnetWrapper:
     def area_search(self, area_name: str):
         # TODO DOC
         result = self.execute_command('lookup area ' + area_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def creature_search(self, creature_name: str):
         # TODO DOC
         result = self.execute_command('lookup creature ' + creature_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def currency_search(self, currency_name: str):
         # TODO DOC
         result = self.execute_command('lookup currency ' + currency_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def faction_search(self, faction_name: str):
         # TODO DOC
         result = self.execute_command('lookup faction ' + faction_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def item_search(self, item_name: str):
         # TODO DOC
         result = self.execute_command('lookup item ' + item_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def itemset_search(self, item_name: str):
         # TODO DOC
         result = self.execute_command('lookup itemset ' + item_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def object_search(self, object_name: str):
         # TODO DOC
         result = self.execute_command('lookup object ' + object_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def pool_search(self, pool_desc: str):
         # TODO DOC
         result = self.execute_command('lookup pool ' + pool_desc + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def quest_search(self, quest_name: str):
         # TODO DOC
         result = self.execute_command('lookup quest ' + quest_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def skill_search(self, skill_name: str):
         # TODO DOC
         result = self.execute_command('lookup skill ' + skill_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def spell_search(self, spell_name: str):
         # TODO DOC
         result = self.execute_command('lookup spell ' + spell_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def taxinode_search(self, taxinode_name: str):
         # TODO DOC
         result = self.execute_command('lookup taxinode ' + taxinode_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def tele_search(self, tele_name: str):
         # TODO DOC
         result = self.execute_command('lookup tele ' + tele_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def title_search(self, title_name: str):
         # TODO DOC
         result = self.execute_command('lookup title ' + title_name + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
 # NPC commands ---------------------------------------------------------------------------------------------------------
@@ -1071,13 +961,11 @@ class TelnetWrapper:
     def npc_show_ai_infos(self):
         # TODO DOC
         result = self.execute_command('npc aiinfo \n')
-        print(result)  # TODO
         return result  # TODO
 
     def npc_delete(self, npc_id: int):
         # TODO DOC
         result = self.execute_command('npc delete ' + str(npc_id) + ' \n')
-        print(result)  # TODO
         return result  # TODO
 
     def npc_set_move_type(self, npc_id: int, stay: bool = False, random: bool = False,  delete_waypoints: bool = False):
@@ -1093,7 +981,6 @@ class TelnetWrapper:
             command += 'NODEL '
         command += ' \n'
         result = self.execute_command(command)
-        print(result)  # TODO
         return result  # TODO
 
 # Dump commands ------------------------------------------------------------------------------------------------------
@@ -1619,43 +1506,11 @@ class TelnetWrapper:
         return result  # TODO
 
 
-#
+# Test zone :
 tn = TelnetWrapper(host='10.0.0.125', port='3443', user='administrator', pwd='administrator')
-
-# print(tn.account_create('test', 'test'))
-# print(tn.account_set_password('test', '123456'))
-# print(tn.account_set_addon('test', 3))
-# print(tn.account_set_gm_level('test', 0))
-# print(tn.send_items('yolo', {27979: 1}), 'plop', 'message text')
-# print(tn.get_online_accounts())
-# print(tn.account_delete('test'))
-
-# tn.send_announce('announce test')
-# tn.send_notification('notify test')
-
-# print(tn.account_search_from_name('alex'))
-# print(tn.account_get_characters('alex'))
 
 tn.character_get_infos('Petroska')
 
-# print(tn.achievement_search('Niveau'))
-# print(tn.achievement_details(44))
-
-# print(tn.ahbot_reload_conf())
 print(tn.ahbot_status(True))
 
-# print(tn.dump_character_export('test_file.dump', 'Petroska'))
-# print(tn.dump_character_import('test_file.dump', 'alex', 50, 'Petroska'))
-# print(tn.character_delete('Petroska'))
-
 tn.close()
-
-'''
-def achievement_criteria_set_complete_progress(self, username: str, criteria_id: int)
-
-def achievement_criteria_add_progress(self, username: str, criteria_id: int, change: int)
-
-def achievement_criteria_reset_progress(self, username: str, criteria_id: int)
-
-def achievement_criteria_reduce_progress(self, username: str, criteria_id: int, change: int)
-'''
