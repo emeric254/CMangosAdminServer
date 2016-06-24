@@ -1619,43 +1619,11 @@ class TelnetWrapper:
         return result  # TODO
 
 
-#
+# Test zone :
 tn = TelnetWrapper(host='10.0.0.125', port='3443', user='administrator', pwd='administrator')
-
-# print(tn.account_create('test', 'test'))
-# print(tn.account_set_password('test', '123456'))
-# print(tn.account_set_addon('test', 3))
-# print(tn.account_set_gm_level('test', 0))
-# print(tn.send_items('yolo', {27979: 1}), 'plop', 'message text')
-# print(tn.get_online_accounts())
-# print(tn.account_delete('test'))
-
-# tn.send_announce('announce test')
-# tn.send_notification('notify test')
-
-# print(tn.account_search_from_name('alex'))
-# print(tn.account_get_characters('alex'))
 
 tn.character_get_infos('Petroska')
 
-# print(tn.achievement_search('Niveau'))
-# print(tn.achievement_details(44))
-
-# print(tn.ahbot_reload_conf())
 print(tn.ahbot_status(True))
 
-# print(tn.dump_character_export('test_file.dump', 'Petroska'))
-# print(tn.dump_character_import('test_file.dump', 'alex', 50, 'Petroska'))
-# print(tn.character_delete('Petroska'))
-
 tn.close()
-
-'''
-def achievement_criteria_set_complete_progress(self, username: str, criteria_id: int)
-
-def achievement_criteria_add_progress(self, username: str, criteria_id: int, change: int)
-
-def achievement_criteria_reset_progress(self, username: str, criteria_id: int)
-
-def achievement_criteria_reduce_progress(self, username: str, criteria_id: int, change: int)
-'''
