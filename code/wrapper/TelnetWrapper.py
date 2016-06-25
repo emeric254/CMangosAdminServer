@@ -803,36 +803,74 @@ class TelnetWrapper:
 # Character commands ---------------------------------------------------------------------------------------------------
 
     def character_get_infos(self, character: str):
+        """
+        Get information about a character.
+
+        :param character: target character
+        :return: character information
+        """
         result = self.execute_command('pinfo ' + character + ' \n')
         return result  # TODO
 
     def character_achievements(self, character: str):
-        # TODO DOC
+        """
+        Get character achievement list.
+
+        :param character: target character
+        :return: character achievement list
+        """
         result = self.execute_command('character achievements ' + character + ' \n')
         return result  # TODO
 
     def character_customize_at_next_login(self, character: str):
-        # TODO DOC
+        """
+        Open customize menu on next character login.
+
+        It allows the player to modify its character appearance
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('character customize ' + character + ' \n')
         return result  # TODO
 
     def character_rename_at_next_login(self, character: str):
-        # TODO DOC
+        """
+        Open name menu on next character login.
+
+        It allows the player to modify its character name
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('character rename ' + character + ' \n')
         return result  # TODO
 
     def character_delete(self, character: str):
-        # TODO DOC
+        """
+        Delete a character.
+
+        :param character: target character
+        :return: True on success, Flase otherwise
+        """
         result = self.execute_command('character erase ' + character + ' \n')
         return ') deleted' in result
 
     def character_get_reputation(self, character: str):
-        # TODO DOC
+        """
+        Get a character reputation.
+
+        :param character: target character
+        :return: character reputation
+        """
         result = self.execute_command('character reputation ' + character + ' \n')
         return result  # TODO
 
     def character_get_titles(self, character: str):
-        # TODO DOC
+        """
+        Get a character title list.
+
+        :param character: target character
+        :return: character title list
+        """
         result = self.execute_command('character titles ' + character + ' \n')
         return result  # TODO
 
