@@ -423,7 +423,12 @@ class TelnetWrapper:
         return result  # TODO
 
     def ahbot_reset_auction(self, force_all_rebuild: bool = False):
-        # TODO DOC
+        """
+        Reset AHBot auctions.
+
+        :param force_all_rebuild: True to force build again all auctions
+        :return: True on success, False otherwise
+        """
         command = 'ahbot rebuild '
         if force_all_rebuild:
             command += 'all '
@@ -433,82 +438,162 @@ class TelnetWrapper:
 
     def ahbot_set_all_quota(self, grey_items: int, white_items: int, green_items: int,
                             blue_items: int, purple_items: int, orange_items: int, yellow_items: int):
-        # TODO DOC
+        """
+        Set AHBot item quotas for auctions.
+
+        :param grey_items: number of grey color items
+        :param white_items: number of white color items
+        :param green_items: number of green color items
+        :param blue_items: number of blue color items
+        :param purple_items: number of purple color items
+        :param orange_items: number of orange color items
+        :param yellow_items: number of yellow color items
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items amount ' + str(grey_items) + ' ' + str(white_items) +
                                       ' ' + str(green_items) + ' ' + str(blue_items) + ' ' + str(purple_items) +
                                       ' ' + str(orange_items) + ' ' + str(yellow_items) + ' \n')
         return result  # TODO
 
     def ahbot_set_grey_quota(self, grey_items: int):
-        # TODO DOC
+        """
+        Set AHBot quota for grey items.
+
+        :param grey_items: number of grey color items
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items amount grey ' + str(grey_items) + ' \n')
         return result  # TODO
 
     def ahbot_set_white_quota(self, white_items: int):
-        # TODO DOC
+        """
+        Set AHBot quota for white items.
+
+        :param white_items: number of white color items
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items amount white ' + str(white_items) + ' \n')
         return result  # TODO
 
     def ahbot_set_green_quota(self, green_items: int):
-        # TODO DOC
+        """
+        Set AHBot quota for green items.
+
+        :param green_items: number of green color items
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items amount green ' + str(green_items) + ' \n')
         return result  # TODO
 
     def ahbot_set_blue_quota(self, blue_items: int):
-        # TODO DOC
+        """
+        Set AHBot quota for blue items.
+
+        :param blue_items: number of blue color items
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items amount blue ' + str(blue_items) + ' \n')
         return result  # TODO
 
     def ahbot_set_purple_quota(self, purple_items: int):
-        # TODO DOC
+        """
+        Set AHBot quota for purple items.
+
+        :param purple_items: number of purple color items
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items amount purple ' + str(purple_items) + ' \n')
         return result  # TODO
 
     def ahbot_set_orange_quota(self, orange_items: int):
-        # TODO DOC
+        """
+        Set AHBot quota for orange items.
+
+        :param orange_items: number of orange color items
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items amount orange ' + str(orange_items) + ' \n')
         return result  # TODO
 
     def ahbot_set_yellow_quota(self, yellow_items: int):
-        # TODO DOC
+        """
+        Set AHBot quota for yellow items.
+
+        :param yellow_items: number of yellow color items
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items amount yellow ' + str(yellow_items) + ' \n')
         return result  # TODO
 
     def ahbot_set_ratios(self, alliance_ratio: int, horde_ratio: int, neutral_ratio: int):
-        # TODO DOC
+        """
+        Set AHBot auction ratio for each race.
+
+        :param alliance_ratio: auction ratio for the alliance
+        :param horde_ratio: auction ratio for the the horde
+        :param neutral_ratio: auction ratio for neutral
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items ratio ' + str(alliance_ratio) +
                                       ' ' + str(horde_ratio) + ' ' + str(neutral_ratio) + ' \n')
         return result  # TODO
 
     def ahbot_set_alliance_ratio(self, alliance_ratio: int):
-        # TODO DOC
+        """
+        Set AHBot auction ratio for the alliance.
+
+        :param alliance_ratio: auction ratio for the alliance
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items ratio alliance ' + str(alliance_ratio) + ' \n')
         return result  # TODO
 
     def ahbot_set_horde_ratio(self, horde_ratio: int):
-        # TODO DOC
+        """
+        Set AHBot auction ratio for the horde.
+
+        :param horde_ratio: auction ratio for the horde
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items ratio horde ' + str(horde_ratio) + ' \n')
         return result  # TODO
 
     def ahbot_set_neutral_ratio(self, neutral_ratio: int):
-        # TODO DOC
+        """
+        Set AHBot auction ratio for neutral.
+
+        :param neutral_ratio: auction ratio for neutral
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ahbot items ratio neutral ' + str(neutral_ratio) + ' \n')
         return result  # TODO
 
 # Auction commands -----------------------------------------------------------------------------------------------------
 
     def auction_show_alliance(self):
-        # TODO DOC
+        """
+        Show alliance auction list.
+
+        :return: alliance auction list
+        """
         result = self.execute_command('auction alliance \n')
         return result  # TODO
 
     def auction_show_horde(self):
-        # TODO DOC
+        """
+        Show horde auction list.
+
+        :return: horde auction list
+        """
         result = self.execute_command('auction horde \n')
         return result  # TODO
 
     def auction_show_goblin(self):
-        # TODO DOC
+        """
+        Show goblin auction list.
+
+        :return: goblin auction list
+        """
         result = self.execute_command('auction goblin \n')
         return result  # TODO
 
@@ -563,77 +648,155 @@ class TelnetWrapper:
 # Ban commands ---------------------------------------------------------------------------------------------------------
 
     def ban_account(self, username: str, reason: str, bantime: str = '-1'):
-        # TODO DOC
+        """
+        Ban a player account.
+
+        :param username: target account
+        :param reason: ban reason
+        :param bantime: ban duration (-1 mean infinite)
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ban account ' + username + ' ' + bantime + ' ' + reason + ' \n')
         return result  # TODO
 
     def ban_character(self, character: str, reason: str, bantime: str = '-1'):
-        # TODO DOC
+        """
+        Ban a player character.
+
+        :param character: target character
+        :param reason: ban reason
+        :param bantime: ban duration (-1 mean infinite)
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ban character ' + character + ' ' + bantime + ' ' + reason + ' \n')
         return result  # TODO
 
     def ban_ip(self, ip_addr: str, reason: str, bantime: str = '-1'):
-        # TODO DOC
+        """
+        Ban an IP address.
+
+        :param ip_addr: target IP address
+        :param reason: ban reason
+        :param bantime: ban duration (-1 mean infinite)
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ban ip ' + ip_addr + ' ' + bantime + ' ' + reason + ' \n')
         return result  # TODO
 
     def ban_info_account(self, username: str):
-        # TODO DOC
+        """
+        Show banned account information.
+
+        :param username: target account
+        :return: ban information
+        """
         result = self.execute_command('baninfo account ' + username + ' \n')
         return result  # TODO
 
     def ban_info_character(self, character: str):
-        # TODO DOC
+        """
+        Show banned character information.
+
+        :param character: target character
+        :return: ban information
+        """
         result = self.execute_command('baninfo character ' + character + ' \n')
         return result  # TODO
 
     def ban_info_ip(self, ip_addr: str):
-        # TODO DOC
+        """
+        Show banned IP address information.
+
+        :param ip_addr: target IP address
+        :return: ban information
+        """
         result = self.execute_command('baninfo ip ' + ip_addr + ' \n')
         return result  # TODO
 
     def ban_list_account(self):
-        # TODO DOC
+        """
+        Get banned accoutn list.
+
+        :return: banned account list
+        """
         result = self.execute_command('banlist account \n')
         return result  # TODO
 
     def ban_list_character(self):
-        # TODO DOC
+        """
+        Get banned character list.
+
+        :return: banned character list
+        """
         result = self.execute_command('banlist character \n')
         return result  # TODO
 
     def ban_list_ip(self):
-        # TODO DOC
+        """
+        Get banned IP address list.
+
+        :return: banned IP address list
+        """
         result = self.execute_command('banlist ip \n')
         return result  # TODO
 
     def ban_list_search_account(self, username: str):
-        # TODO DOC
+        """
+        Search a banned account by its name (or a fragment).
+
+        :param username: account name to search (or a fragment)
+        :return: result list
+        """
         result = self.execute_command('banlist account ' + username + ' \n')
         return result  # TODO
 
     def ban_list_search_character(self, character: str):
-        # TODO DOC
+        """
+        Search a banned character by its name (or a fragment).
+
+        :param character: character name (or a fragment)
+        :return: result list
+        """
         result = self.execute_command('banlist character ' + character + ' \n')
         return result  # TODO
 
     def ban_list_search_ip(self, ip_addr: str):
-        # TODO DOC
+        """
+        Search a banned IP address (or a fragment).
+
+        :param ip_addr: IP address (or a fragment)
+        :return: result list
+        """
         result = self.execute_command('banlist ip ' + ip_addr + ' \n')
         return result  # TODO
 
     def unban_account(self, username: str):
-        # TODO DOC
+        """
+        Remove ban to an account.
+
+        :param username: target account
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('unban account ' + username + ' \n')
         return result  # TODO
 
     def unban_character(self, character: str):
-        # TODO DOC
+        """
+        Remove ban to a character.
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('unban character ' + character + ' \n')
         return result  # TODO
 
     def unban_ip(self, ip_addr: str):
-        # TODO DOC
+        """
+        Remove ban to an IP address.
+
+        :param ip_addr: target IP address
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('unban ip ' + ip_addr + ' \n')
         return result  # TODO
 
