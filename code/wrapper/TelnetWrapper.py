@@ -875,123 +875,248 @@ class TelnetWrapper:
         return result  # TODO
 
     def character_stop_combat(self, character: str):
-        # TODO DOC
+        """
+        Stop combat for a character.
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('combatstop ' + character + ' \n')
         return result  # TODO
 
     def character_set_level(self, character: str, level: int = 0):
-        # TODO DOC
+        """
+        Set a character level.
+
+        :param character: target character
+        :param level: level to set
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('character level ' + character + ' ' + str(level) + ' \n')
         return result  # TODO
 
     def character_levelup(self, character: str, level: int = 1):
-        # TODO DOC
+        """
+        Make a character level up.
+
+        :param character: target character
+        :param level: number of level
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('levelup ' + character + ' ' + str(level) + ' \n')
         return result  # TODO
 
     def character_mute(self, character: str, duration: int = 1):
-        # TODO DOC
+        """
+        Block chat messaging for a character.
+
+        :param character: target character
+        :param duration: block duration
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('mute ' + character + ' ' + str(duration) + ' \n')
         return result  # TODO
 
     def character_unmute(self, character: str):
-        # TODO DOC
+        """
+        Restore chat messaging for a character.
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('unmute ' + character + ' \n')
         return result  # TODO
 
     def character_recall(self, character: str):
-        # TODO DOC
+        """
+        Teleport a character to the last safe point.
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('recall ' + character + ' \n')
         return result  # TODO
 
     def character_restore_deleted(self, character: str, new_name: str = '', account: str = ''):
-        # TODO DOC
+        """
+        Restore a deleted character.
+
+        :param character: target character
+        :param new_name: new character name
+        :param account: new account to restore into instead of original one
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('character deleted restore ' + character +
                                       ' ' + new_name + ' ' + account + ' \n')
         return result  # TODO
 
     def character_delete_deleted(self, character: str):
-        # TODO DOC
+        """
+        Completely delete a deleted character.
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('character deleted delete ' + character + ' \n')
         return result  # TODO
 
     def character_delete_deleted_old(self):
-        # TODO DOC
+        """
+        Deleted old deleted characters.
+
+        How old value will be read from CMaNGOS server configuration
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('character deleted old \n')
         return result  # TODO
 
     def character_delete_deleted_older_than(self, days: int):
-        # TODO DOC
+        """
+        Deleted old deleted characters.
+
+        :param days: how old deleted character will be deleted
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('character deleted old ' + str(days) + ' \n')
         return result  # TODO
 
     def character_deleted_list(self):
-        # TODO DOC
+        """
+        Get deleted character list.
+
+        :return: deleted character list
+        """
         result = self.execute_command('character deleted list \n')
         return result  # TODO
 
     def character_search_deleted_list(self, character: str):
-        # TODO DOC
+        """
+        Search a deleted character by its name (or a fragment).
+
+        :param character: name (or a fragment)
+        :return: found character list
+        """
         result = self.execute_command('character deleted list ' + character + ' \n')
         return result  # TODO
 
     def character_search_from_name(self, character: str, limit: int = 100):
-        # TODO DOC
+        """
+        Search a character by its name (or a fragment).
+
+        :param character: name (or a fragment)
+        :param limit: result limit number
+        :return: found character list
+        """
         result = self.execute_command('lookup player account ' + character + ' ' + str(limit) + ' \n')
         return result  # TODO
 
     def character_search_from_email(self, email: str, limit: int = 100):
-        # TODO DOC
+        """
+        Search a character by its email (or a fragment).
+
+        :param email: email (or a fragment)
+        :param limit: result limit number
+        :return: found character list
+        """
         result = self.execute_command('lookup player email ' + email + ' ' + str(limit) + ' \n')
         return result  # TODO
 
     def character_search_from_ip(self, ip_addr: str, limit: int = 100):
-        # TODO DOC
+        """
+        Search a character by its IP address (or a fragment).
+
+        :param ip_addr: IP address (or a fragment)
+        :param limit: result limit number
+        :return: found character list
+        """
         result = self.execute_command('lookup player ip ' + ip_addr + ' ' + str(limit) + ' \n')
         return result  # TODO
 
     def character_reset_achievements(self, character: str):
-        # TODO DOC
+        """
+        Reset character achievements.
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reset achievements ' + character + ' \n')
         return result  # TODO
 
     def character_reset_honor(self, character: str):
-        # TODO DOC
+        """
+        Reset character honor.
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reset honor ' + character + ' \n')
         return result  # TODO
 
     def character_reset_level(self, character: str):
-        # TODO DOC
+        """
+        Reset character level.
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reset level ' + character + ' \n')
         return result  # TODO
 
     def character_reset_specs(self, character: str):
-        # TODO DOC
+        """
+        Reset character specs (all talents).
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reset specs ' + character + ' \n')
         return result  # TODO
 
     def character_reset_spells(self, character: str):
-        # TODO DOC
+        """
+        Reset character spells.
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reset spells ' + character + ' \n')
         return result  # TODO
 
     def character_reset_stats(self, character: str):
-        # TODO DOC
+        """
+        Reset character stats.
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reset stats ' + character + ' \n')
         return result  # TODO
 
     def character_reset_talents(self, character: str):
-        # TODO DOC
+        """
+        Reset character talents (current spec).
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reset talents ' + character + ' \n')
         return result  # TODO
 
     def character_all_reset_spells(self):
-        # TODO DOC
+        """
+        Reset spells for all characters.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reset all spells \n')
         return result  # TODO
 
     def character_all_reset_talents(self):
-        # TODO DOC
+        """
+        Reset talents for all characters.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reset all talents \n')
         return result  # TODO
 
