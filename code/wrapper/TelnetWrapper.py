@@ -1261,27 +1261,51 @@ class TelnetWrapper:
 # Event commands -------------------------------------------------------------------------------------------------------
 
     def event_get_details(self, event_id: int):
-        # TODO DOC
+        """
+        Get details about an event.
+
+        :param event_id: target event id
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('event ' + str(event_id) + ' \n')
         return result  # TODO
 
     def event_list(self):
-        # TODO DOC
+        """
+        Get event list.
+
+        :return: event list
+        """
         result = self.execute_command('event list \n')
         return result  # TODO
 
     def event_start(self, event_id: int):
-        # TODO DOC
+        """
+        Start an event.
+
+        :param event_id: target event id
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('event start ' + str(event_id) + ' \n')
         return result  # TODO
 
     def event_stop(self, event_id: int):
-        # TODO DOC
+        """
+        Stop an event.
+
+        :param event_id: target event id
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('event stop ' + str(event_id) + ' \n')
         return result  # TODO
 
     def event_search(self, event_name: str):
-        # TODO DOC
+        """
+        Search for an event.
+
+        :param event_name: event name (or a fragment)
+        :return: result as an event list
+        """
         result = self.execute_command('lookup event ' + str(event_name) + ' \n')
         return result  # TODO
 
