@@ -6,13 +6,23 @@ import telnetlib
 
 class TelnetWrapper:
     """
-    Telnet based command wrapper for CMaNGOS
+    Telnet based command wrapper for CMaNGOS.
 
     This class interact with a CMaNGOS server by Telnet connection.
     Functions return a boolean statement or formatted data.
     """
+
     def __init__(self, host: str, port: str, user: str, pwd: str, log_level=logging.INFO):
-        # TODO DOC
+        """
+        Create an instance of this class.
+
+        It'll open a Telnet session to a CMaNGOS server and log into it.
+        :param host: CMaNGOS Telnet IP/hostname
+        :param port: CMaNGOS Telnet port
+        :param user: CMaNGOS admin account username
+        :param pwd: CMaNGOS admin account password
+        :param log_level: cf. logging.log_level
+        """
         logging.basicConfig(filename='../../wrapper.log', level=log_level)
         self.host = host
         self.port = port
@@ -24,7 +34,7 @@ class TelnetWrapper:
 
     def is_session_open(self):
         """
-        Return Telnet session state
+        Return Telnet session state.
 
         True if session established, False otherwise
         :return: True if the session is opened with the CMaNGOS server
@@ -33,7 +43,7 @@ class TelnetWrapper:
 
     def open_session(self):
         """
-        Try to open a Telnet session with the CMaNGOS server
+        Try to open a Telnet session with the CMaNGOS server.
 
         Do nothing if already in a connected state
         """
@@ -46,7 +56,7 @@ class TelnetWrapper:
 
     def connect(self):
         """
-        Try to login into CMaNGOS server cli prompt
+        Try to login into CMaNGOS server cli prompt.
 
         Wait for credential questions and answer them with given ones.
         """
@@ -63,7 +73,7 @@ class TelnetWrapper:
 
     def wait_cli_prompt(self):
         """
-        Flush data stream before doing a command
+        Flush data stream before doing a command.
 
         Make sure there is no more data available to read
         """
@@ -77,7 +87,7 @@ class TelnetWrapper:
 
     def disconnect(self):
         """
-        Disconnect from CMaNGOS cli prompt
+        Disconnect from CMaNGOS cli prompt.
 
         Send 'quit' command to disconnect from CMaNGOS cli prompt
         """
@@ -86,21 +96,21 @@ class TelnetWrapper:
 
     def close_session(self):
         """
-        Close the Telnet session
+        Close the Telnet session.
         """
         logging.info('Closing Telnet connection to ' + self.host + ':' + self.port)
         self.tn_client.close()
 
     def close(self):
         """
-        Disconnect from CMaNGOS cli prompt and close Telnet session
+        Disconnect from CMaNGOS cli prompt and close Telnet session.
         """
         self.disconnect()
         self.close_session()
 
     def execute_command(self, command: str):
         """
-        Execute a command into CMaNGOS cli prompt and return the result
+        Execute a command into CMaNGOS cli prompt and return the result.
 
         Send command into CMaNGOS cli prompt and read answered data
         :arg command 'str' to execute
@@ -117,7 +127,7 @@ class TelnetWrapper:
 
     def get_online_accounts(self):
         """
-        Get currently online accounts
+        Get currently online accounts.
 
         :return: currently connected account as a dict
         """
@@ -138,9 +148,9 @@ class TelnetWrapper:
 
     def account_get_characters(self, username: str):
         """
-        Get account characters as a list
+        Get account characters as a list.
 
-        :param username: account name
+        :param username: target account login
         :return: account characters as a dict
         """
         characters = {}
@@ -159,7 +169,7 @@ class TelnetWrapper:
 
     def account_create(self, username: str, password: str):
         """
-        Create a new account with a login and a password
+        Create a new account with a login and a password.
 
         :param username: new account login
         :param password: new account password
@@ -170,9 +180,9 @@ class TelnetWrapper:
 
     def account_set_password(self, username: str, password: str):
         """
-        Replace an account password with a new one
+        Replace an account password with a new one.
 
-        :param username: account login
+        :param username: target account login
         :param password: new account password
         :return: True on success, False otherwise
         """
@@ -181,9 +191,9 @@ class TelnetWrapper:
 
     def account_set_addon(self, username: str, addon: int):
         """
-        Set expansion access to an account
+        Set expansion access to an account.
 
-        :param username: account login
+        :param username: target account login
         :param addon: expansion id (0, 1, 2 ...)
         :return: True on success, False otherwise
         """
@@ -194,10 +204,10 @@ class TelnetWrapper:
 
     def account_set_gm_level(self, username: str, gm_level: int):
         """
-        Set account permission level
+        Set account permission level.
 
-        :param username: account login
-        :param gm_level: gm level (0: player, 1: modo, 2: gm, 3: admin)
+        :param username: target account login
+        :param gm_level: gm level (0: player, 1: moderator, 2: game master, 3: administrator)
         :return: True on success, False otherwise
         """
         if gm_level < 0 or gm_level > 3:
@@ -207,9 +217,9 @@ class TelnetWrapper:
 
     def account_delete(self, username: str):
         """
-        Delete an account
+        Delete an account.
 
-        :param username: account login
+        :param username: target account login
         :return: True on success, False otherwise
         """
         result = self.execute_command('account delete ' + username + ' \n')
@@ -217,7 +227,7 @@ class TelnetWrapper:
 
     def account_search_from_email(self, user_email: str, limit: int = 100):
         """
-        Search in accounts corresponding email (or fragment)
+        Search in accounts corresponding email (or fragment).
 
         :param user_email: account email (or a fragment) to search from
         :param limit: result number limit
@@ -240,7 +250,7 @@ class TelnetWrapper:
 
     def account_search_from_name(self, username: str, limit: int = 100):
         """
-        Search in accounts corresponding login (or fragment)
+        Search in accounts corresponding login (or fragment).
 
         :param username: account login (or a fragment) to search from
         :param limit: result number limit
@@ -263,7 +273,7 @@ class TelnetWrapper:
 
     def account_search_from_ip(self, ip_addr: str, limit: int = 100):
         """
-        Search in accounts corresponding last used ip address (or fragment)
+        Search in accounts corresponding last used ip address (or fragment).
 
         :param ip_addr: account last used ip address (or a fragment) to search from
         :param limit: result number limit
@@ -288,17 +298,17 @@ class TelnetWrapper:
 
     def achievement_details(self, achievement_id: int):
         """
-        Get details about an achievement
+        Get details about an achievement.
 
         :param achievement_id: the achievement id
-        :return: details about the acvhievement
+        :return: details about the achievement
         """
         result = self.execute_command('achievement ' + str(achievement_id) + ' \n')
         return result  # TODO
 
     def achievement_search(self, achievement_name: str):
         """
-        Search in achievements with a name (or a fragment)
+        Search in achievements with a name (or a fragment).
 
         :param achievement_name: name to lookup (or a fragment)
         :return: list of achievement results
@@ -307,38 +317,82 @@ class TelnetWrapper:
         return result  # TODO
 
     def achievement_state(self, character: str, achievement_id: int):
-        # TODO DOC
+        """
+        Get an achievement state for a character.
+
+        :param character: target character
+        :param achievement_id: target achievement id
+        :return: this achievement state for the target character
+        """
         result = self.execute_command('achievement ' + character + ' ' + str(achievement_id) + ' \n')
         return result  # TODO
 
     def achievement_set_complete(self, character: str, achievement_id: int):
-        # TODO DOC
+        """
+        Set an achievement complete for a character.
+
+        :param character: target character
+        :param achievement_id: target achievement id
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('achievement add ' + character + ' ' + str(achievement_id) + ' \n')
         return result  # TODO
 
     def achievement_remove(self, character: str, achievement_id: int):
-        # TODO DOC
+        """
+        Reset an achievement for a character.
+
+        :param character: target character
+        :param achievement_id: target achievement id
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('achievement remove ' + character + ' ' + str(achievement_id) + ' \n')
         return result  # TODO
 
     def achievement_criteria_set_complete_progress(self, character: str, criteria_id: int):
-        # TODO DOC
+        """
+        Set an achievement criteria complete for a character.
+
+        :param character: target character
+        :param criteria_id: target achievement criteria id
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('achievement criteria add ' + character + ' ' + str(criteria_id) + ' \n')
         return result  # TODO
 
     def achievement_criteria_add_progress(self, character: str, criteria_id: int, change: int):
-        # TODO DOC
+        """
+        Add some progress to an achievement criteria for a character.
+
+        :param character: target character
+        :param criteria_id: target achievement criteria id
+        :param change: progress state to add
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('achievement criteria add ' + character +
                                       ' ' + str(criteria_id) + ' ' + str(change) + ' \n')
         return result  # TODO
 
     def achievement_criteria_reset_progress(self, character: str, criteria_id: int):
-        # TODO DOC
+        """
+        Reset an achievement criteria for a character.
+
+        :param character: target character
+        :param criteria_id: target achievement criteria id
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('achievement criteria remove ' + character + ' ' + str(criteria_id) + ' \n')
         return result  # TODO
 
     def achievement_criteria_reduce_progress(self, character: str, criteria_id: int, change: int):
-        # TODO DOC
+        """
+        Remove some progress to an achievement criteria for a character.
+
+        :param character: target character
+        :param criteria_id: target achievement criteria id
+        :param change: progress state to remove
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('achievement criteria remove ' + character +
                                       ' ' + str(criteria_id) + ' ' + str(change) + ' \n')
         return result  # TODO
@@ -347,17 +401,22 @@ class TelnetWrapper:
 
     def ahbot_reload_conf(self):
         """
-        Reload AHBot configuration
+        Reload AHBot configuration.
 
         :return: True if success, False otherwise
         """
         result = self.execute_command('ahbot reload \n')
         return 'All config are reloaded from ahbot configuration file.' in result
 
-    def ahbot_status(self, detailled: bool = False):
-        # TODO DOC
+    def ahbot_status(self, detailed: bool = False):
+        """
+        Get AHBot information.
+
+        :param detailed: True for more information
+        :return: AHBot information
+        """
         command = 'ahbot status '
-        if detailled:
+        if detailed:
             command += 'all '
         command += ' \n'
         result = self.execute_command(command)
@@ -967,11 +1026,11 @@ class TelnetWrapper:
 
 # NPC commands ---------------------------------------------------------------------------------------------------------
 
-    def npc_show_ai_infos(self):
+    def npc_show_ai_info(self):
         """
-        Get NPC AI and scripts informations.
+        Get NPC AI and scripts information.
 
-        :return: NPC AI and scripts informations
+        :return: NPC AI and scripts information
         """
         result = self.execute_command('npc aiinfo \n')
         return result  # TODO
@@ -1128,7 +1187,7 @@ class TelnetWrapper:
         """
         Send a announce to all online players.
 
-        It'll be displayed in the tchat box
+        It'll be displayed in the chat box
         :param message: message to announce to all online players
         """
         self.execute_command('announce ' + message + ' \n')
@@ -1146,7 +1205,7 @@ class TelnetWrapper:
         """
         Send a announce to a character (online player).
 
-        It'll be displayed in the tchat box
+        It'll be displayed in the chat box
         :param character: target online character
         :param message: message to announce at this player
         """
