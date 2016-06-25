@@ -1123,22 +1123,43 @@ class TelnetWrapper:
 # Debug commands -------------------------------------------------------------------------------------------------------
 
     def debug_toggle_arenas(self):
-        # TODO DOC
+        """
+        Toggle debug mode for arenas.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('debug arena \n')
         return result  # TODO
 
     def debug_toggle_battlegrounds(self):
-        # TODO DOC
+        """
+        Toggle debug mode for battlegrounds.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('debug bg \n')
         return result  # TODO
 
     def debug_show_spell_coefs(self, spell_id: int):
-        # TODO DOC
+        """
+        Show spell coefficients.
+
+        :param spell_id: target spell
+        :return: spell coefficients
+        """
         result = self.execute_command('debug spellcoefs ' + str(spell_id) + ' \n')
         return result  # TODO
 
     def debug_mod_spells(self, spell_mask_bit_index: int, spell_mod_op: int, value: int, pct: bool = False):
-        # TODO DOC
+        """
+        Set debug mod for a spell.
+
+        :param spell_mask_bit_index: target spell
+        :param spell_mod_op: spell mod
+        :param value: debug value
+        :param pct: is it a pct value ?
+        :return: True on success, False otherwise
+        """
         command = 'debug spellmods '
         if pct:
             command += 'pct '
