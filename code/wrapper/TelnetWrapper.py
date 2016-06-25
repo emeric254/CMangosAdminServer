@@ -1172,22 +1172,41 @@ class TelnetWrapper:
 # Ticket commands ------------------------------------------------------------------------------------------------------
 
     def ticket_delete_all(self):
-        # TODO DOC
+        """
+        Delete all tickets.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('delticket all \n')
         return result  # TODO
 
     def ticket_delete(self, ticket_id: int):
-        # TODO DOC
+        """
+        Delete a ticket.
+
+        :param ticket_id: target ticket id
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('delticket ' + str(ticket_id) + ' \n')
         return result  # TODO
 
     def ticket_delete_from_character(self, character: str):
-        # TODO DOC
+        """
+        Delete all tickets from a character.
+
+        :param character: target character name
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('delticket ' + character + ' \n')
         return result  # TODO
 
     def ticket_gm_show_new_directly(self, activated: bool = True):
-        # TODO DOC
+        """
+        Activate or not new ticket direct show.
+
+        :param activated: activation state
+        :return: True on success, False otherwise
+        """
         command = 'ticket '
         if activated:
             command += 'on'
@@ -1198,22 +1217,44 @@ class TelnetWrapper:
         return result  # TODO
 
     def ticket_show(self, ticket_id: int):
-        # TODO DOC
+        """
+        Get a ticket information.
+
+        :param ticket_id: target ticket id
+        :return: ticket information
+        """
         result = self.execute_command('ticket ' + str(ticket_id) + ' \n')
         return result  # TODO
 
     def ticket_show_from_character(self, character: str):
-        # TODO DOC
+        """
+        Get all tickets from a character.
+
+        :param character: target character
+        :return: ticket list
+        """
         result = self.execute_command('ticket ' + character + ' \n')
         return result  # TODO
 
     def ticket_respond(self, ticket_id: int, response: str):
-        # TODO DOC
+        """
+        Answer to a ticket.
+
+        :param ticket_id: target ticket id
+        :param response: response content
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ticket respond ' + str(ticket_id) + ' ' + response + ' \n')
         return result  # TODO
 
     def ticket_respond_from_character(self, character: str, response: str):
-        # TODO DOC
+        """
+        Answer to character tickets.
+
+        :param character: target character
+        :param response: response content
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('ticket respond ' + character + ' ' + response + ' \n')
         return result  # TODO
 
