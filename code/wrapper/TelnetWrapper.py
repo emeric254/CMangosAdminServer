@@ -1658,8 +1658,6 @@ class TelnetWrapper:
 
 # Server commands ------------------------------------------------------------------------------------------------------
 
-# TODO
-
     def server_save_all(self):
         """
         Request server to make a full save.
@@ -2020,8 +2018,6 @@ class TelnetWrapper:
 
 # Gobject commands -----------------------------------------------------------------------------------------------------
 
-# TODO
-
     def gobject_add(self, gobject_id: int, spawn_time: int):
         # TODO DOC
         result = self.execute_command('gobject add ' + str(gobject_id) + ' ' + str(spawn_time) + ' \n')
@@ -2055,10 +2051,13 @@ class TelnetWrapper:
 
 # GM commands ----------------------------------------------------------------------------------------------------------
 
-# TODO
-
     def gm_set_visiblity(self, visibility: bool = True):
-        # TODO DOC
+        """
+        Set game master visibility.
+
+        :param visibility: game master visibility
+        :return: True on success, False otherwise
+        """
         command = 'gm visible '
         if visibility:
             command += 'on '
@@ -2069,7 +2068,12 @@ class TelnetWrapper:
         return result  # TODO
 
     def gm_set_fly(self, fly: bool = True):
-        # TODO DOC
+        """
+        Set game master fly mode.
+
+        :param fly: fly mode activation
+        :return: True on success, False otherwise
+        """
         command = 'gm fly '
         if fly:
             command += 'on '
@@ -2080,11 +2084,21 @@ class TelnetWrapper:
         return result  # TODO
 
     def gm_get_gm_mode(self):
+        """
+        Get current game master mode.
+
+        :return: current game master mode
+        """
         result = self.execute_command('gm \n')
         return result  # TODO
 
     def gm_set_gm_mode(self, gm_mode: bool = True):
-        # TODO DOC
+        """
+        Set game master mode activation.
+
+        :param gm_mode: game master mode activation
+        :return: True on success, False otherwise
+        """
         command = 'gm '
         if gm_mode:
             command += 'on '
@@ -2095,11 +2109,21 @@ class TelnetWrapper:
         return result  # TODO
 
     def gm_get_gm_mode_chat(self):
+        """
+        Get current game master chat mode.
+
+        :return: game master chat mode
+        """
         result = self.execute_command('gm chat \n')
         return result  # TODO
 
     def gm_set_gm_mode_chat(self, gm_mode_chat: bool = True):
-        # TODO DOC
+        """
+        Set game master chat mode (show gm chat message as gm messages).
+
+        :param gm_mode_chat: activation state
+        :return: True on success, False otherwise
+        """
         command = 'gm chat '
         if gm_mode_chat:
             command += 'on '
@@ -2110,12 +2134,20 @@ class TelnetWrapper:
         return result  # TODO
 
     def gm_all_list(self):
-        # TODO DOC
+        """
+        Get game master list.
+
+        :return: game master list
+        """
         result = self.execute_command('gm list \n')
         return result  # TODO
 
     def gm_ingame_list(self):
-        # TODO DOC
+        """
+        Get online game master list.
+
+        :return: online game master list
+        """
         result = self.execute_command('gm ingame \n')
         return result  # TODO
 
