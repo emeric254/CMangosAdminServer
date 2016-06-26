@@ -1312,34 +1312,67 @@ class TelnetWrapper:
 # Guild commands -------------------------------------------------------------------------------------------------------
 
     def guild_create(self, guild_name: str, guild_leader: str = ''):
-        # TODO DOC
+        """
+        Create a guild.
+
+        :param guild_name: new guild name
+        :param guild_leader: character name who'll be guild leader (optional)
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('guild create "' + guild_name + '" ' + guild_leader + ' \n')
         return result  # TODO
 
     def guild_delete(self, guild_name: str):
-        # TODO DOC
+        """
+        Delete a guild.
+
+        :param guild_name: target guild name
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('guild delete "' + guild_name + '" \n')
         return result  # TODO
 
     def guild_invite(self, character: str, guild_name: str):
-        # TODO DOC
+        """
+        Invite a character into a guild.
+
+        :param character: target character
+        :param guild_name: target guild
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('guild invite ' + character + ' "' + guild_name + '" \n')
         return result  # TODO
 
     def guild_character_set_rank(self, character: str, rank: int):
-        # TODO DOC
+        """
+        Set guild rank to a character.
+
+        :param character: target character
+        :param rank: target rank
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('guild rank ' + character + ' ' + str(rank) + ' \n')
         return result  # TODO
 
     def guild_uninvite(self, character: str):
-        # TODO DOC
+        """
+        Delete a guild invite for a character.
+
+        :param character: target character
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('guild uninvite ' + character + ' \n')
         return result  # TODO
 
 # Honor commands -------------------------------------------------------------------------------------------------------
 
     def honor_reset(self, character: str):
-        # TODO DOC
+        """
+        Reset a character honor.
+
+        :param character: target character
+        :return: True on success, False otherwisec
+        """
         result = self.execute_command('reset honor ' + character + ' \n')
         return result  # TODO
 
