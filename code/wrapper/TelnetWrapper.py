@@ -1661,42 +1661,78 @@ class TelnetWrapper:
 # TODO
 
     def server_save_all(self):
-        # TODO DOC
+        """
+        Request server to make a full save.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('saveall \n')
         return result  # TODO
 
     def server_idle_restart(self, delay: int = 1):
-        # TODO DOC
+        """
+        Request server to restart after some idle time.
+
+        :param delay: idle time before restart
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server idlerestart ' + str(delay) + ' \n')
         return result  # TODO
 
     def server_cancel_idle_restart(self):
-        # TODO DOC
+        """
+        Cancel a idle restart request.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server idlerestart cancel \n')
         return result  # TODO
 
     def server_idle_shutdown(self, delay: int = 1):
-        # TODO DOC
+        """
+        Request server to shutdown after some idle time.
+
+        :param delay: idle time before shutdown
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server idleshutdown ' + str(delay) + ' \n')
         return result  # TODO
 
     def server_cancel_idle_shutdown(self):
-        # TODO DOC
+        """
+        Cancel a idle shutdown request.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server idleshutdown cancel \n')
         return result  # TODO
 
     def server_get_infos(self):
-        # TODO DOC
+        """
+        Get server information.
+
+        :return: server information
+        """
         result = self.execute_command('server info \n')
         return result  # TODO
 
     def server_get_log_filter(self):
-        # TODO DOC
+        """
+        Get server log filter.
+
+        :return: server log filter
+        """
         result = self.execute_command('server log filter \n')
         return result  # TODO
 
     def server_set_log_filter(self, log_filter_name: str, activation: bool):
-        # TODO DOC
+        """
+        Set server log filter.
+
+        :param log_filter_name: log filter name
+        :param activation: log filter activation
+        :return: True on success, False otherwise
+        """
         command = 'server log filter ' + log_filter_name + ' '
         if activation:
             command += 'on '
@@ -1707,152 +1743,278 @@ class TelnetWrapper:
         return result  # TODO
 
     def server_get_log_level(self):
-        # TODO DOC
+        """
+        Get server log level.
+
+        :return: server log level
+        """
         result = self.execute_command('server log level \n')
         return result  # TODO
 
     def server_set_log_level(self, log_level: int):
-        # TODO DOC
+        """
+        Set server log level.
+
+        :param log_level: target log level
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server log level ' + str(log_level) + ' \n')
         return result  # TODO
 
     def server_get_motd(self):
-        # TODO DOC
+        """
+        Get server message of the day.
+
+        :return: server message of the day
+        """
         result = self.execute_command('server motd \n')
         return result  # TODO
 
     def server_set_motd(self, message: str):
-        # TODO DOC
+        """
+        Set server message of the day.
+
+        :param message: new message of the day
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server set motd ' + message + ' \n')
         return result  # TODO
 
     def server_restart(self, delay: int):
-        # TODO DOC
+        """
+        Request server to restart.
+
+        :param delay: delay before restart
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server restart ' + str(delay) + ' \n')
         return result  # TODO
 
     def server_cancel_restart(self):
-        # TODO DOC
+        """
+        Cancel server restart request.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server restart cancel \n')
         return result  # TODO
 
     def server_exit(self):
-        # TODO DOC
+        """
+        Request server to shutdown NOW !
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server exit \n')
         return result  # TODO
 
     def server_shutdown(self, delay: int):
-        # TODO DOC
+        """
+        Request server to shutdown.
+
+        :param delay: delay before shutdown
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server shutdown ' + str(delay) + ' \n')
         return result  # TODO
 
     def server_cancel_shutdown(self):
-        # TODO DOC
+        """
+        Cancel server shutdown request.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server shutdown cancel \n')
         return result  # TODO
 
     def server_check_expired_corpses(self):
-        # TODO DOC
+        """
+        Request server to check for expired corpses.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server corpses \n')
         return result  # TODO
 
     def server_reload_config(self):
-        # TODO DOC
+        """
+        Request server to reload its configuration.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload config \n')
         return result  # TODO
 
     def server_reload_all(self):
-        # TODO DOC
+        """
+        Request server to reload all its stuff.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload all \n')
         return result  # TODO
 
     def server_reload_achievements(self):
-        # TODO DOC
+        """
+        Request server to reload achievements.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload all_achievement \n')
         return result  # TODO
 
     def server_reload_areas(self):
-        # TODO DOC
+        """
+        Request server to reload areas.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload all_area \n')
         return result  # TODO
 
     def server_reload_eventais(self):
-        # TODO DOC
+        """
+        Request server to reload AI events.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload all_eventai \n')
         return result  # TODO
 
     def server_reload_items(self):
-        # TODO DOC
+        """
+        Request server to reload items.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload all_item \n')
         return result  # TODO
 
     def server_reload_locales(self):
-        # TODO DOC
+        """
+        Request server to reload locales.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload all_locales \n')
         return result  # TODO
 
     def server_reload_loots(self):
-        # TODO DOC
+        """
+        Request server to reload loots.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload all_loot \n')
         return result  # TODO
 
     def server_reload_npcs(self):
-        # TODO DOC
+        """
+        Request server to reload NPCs.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload all_npc \n')
         return result  # TODO
 
     def server_reload_quests(self):
-        # TODO DOC
+        """
+        Request server to reload quests.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload all_quest \n')
         return result  # TODO
 
     def server_reload_scripts(self):
-        # TODO DOC
+        """
+        Request server to reload scripts.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload all_script \n')
         return result  # TODO
 
     def server_reload_spells(self):
-        # TODO DOC
+        """
+        Request server to reload spells.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('reload all_spell \n')
         return result  # TODO
 
     def server_show_player_limits(self):
-        # TODO DOC
+        """
+        Get server player limit number.
+
+        :return: server player limit number
+        """
         result = self.execute_command('server plimit \n')
         return result  # TODO
 
     def server_set_player_number_limit(self, number: int):
-        # TODO DOC
+        """
+        Set server player limit number.
+
+        :param number: target new limit of player number
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server plimit ' + str(number) + ' \n')
         return result  # TODO
 
     def server_set_player_restrict_limit(self):
-        # TODO DOC
+        """
+        Request server to restrict connection at player right level.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server plimit player \n')
         return result  # TODO
 
     def server_set_moderator_restrict_limit(self):
-        # TODO DOC
+        """
+        Request server to restrict connection at moderator right level.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server plimit moderator \n')
         return result  # TODO
 
     def server_set_gamemaster_restrict_limit(self):
-        # TODO DOC
+        """
+        Request server to restrict connection at game master right level.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server plimit gamemaster \n')
         return result  # TODO
 
     def server_set_administrator_restrict_limit(self):
-        # TODO DOC
+        """
+        Request server to restrict connection at administrator right level.
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server plimit administrator \n')
         return result  # TODO
 
     def server_reset_player_limits(self):
-        # TODO DOC
+        """
+        Reset server player number limit to the configuration file value
+
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('server plimit reset \n')
         return result  # TODO
 
     def server_load_scripts(self, script_library_name: str):
-        # TODO DOC
+        """
+        Request server to load a script library.
+
+        :param script_library_name: script library to load
+        :return: True on success, False otherwise
+        """
         result = self.execute_command('loadscripts ' + script_library_name + ' \n')
         return result  # TODO
 
