@@ -119,7 +119,8 @@ class TelnetWrapper:
         self.wait_cli_prompt()
         logging.info('Execute command : ' + command)
         self.tn_client.write(bytes(command, 'UTF-8'))
-        result = str(self.tn_client.read_until(b"mangos>")).replace('\\r', '')  # can remove '\r' char here
+        # can remove "b'" start, last "'" and "\r" char here :
+        result = str(self.tn_client.read_until(b"mangos>"))[2:-1].replace('\\r', '')
         logging.debug('Response ' + result)
         return result
 
@@ -304,7 +305,23 @@ class TelnetWrapper:
         :return: details about the achievement
         """
         result = self.execute_command('achievement ' + str(achievement_id) + ' \n')
-        return result  # TODO
+        if 'doesn\'t exist' in result:
+            return None
+        result = result.split('\\n')
+        (a_id, a_name) = result[0].split(' - ', maxsplit=1)
+        achievement = {
+            'id': a_id,
+            'name': a_name,
+            'criteria': {}
+        }
+        if len(result) > 1:
+            for crit in result[2:-1]:
+                (a_id, a_name) = crit.split(' - ', maxsplit=1)
+                achievement['criteria'][a_id] = {
+                    'id': a_id,
+                    'name': a_name
+                }
+        return achievement
 
     def achievement_search(self, achievement_name: str):
         """
@@ -314,7 +331,17 @@ class TelnetWrapper:
         :return: list of achievement results
         """
         result = self.execute_command('lookup achievement ' + achievement_name + ' \n')
-        return result  # TODO
+        if 'doesn\'t exist' in result:
+            return []
+        result = result.split('\\n')[:-1]
+        ach_list = []
+        for ach in result:
+            (a_id, a_name) = ach.split(' - ', maxsplit=1)
+            ach_list.append({
+                'id': a_id,
+                'name': a_name
+            })
+        return ach_list
 
     def achievement_state(self, character: str, achievement_id: int):
         """
@@ -2233,5 +2260,11 @@ tn = TelnetWrapper(host='10.0.0.125', port='3443', user='administrator', pwd='ad
 tn.character_get_infos('Petroska')
 
 print(tn.ahbot_status(True))
+
+print(tn.achievement_details(achievement_id=230))
+
+print(tn.achievement_search(achievement_name='cyclone'))
+
+print(tn.achievement_state('Petroska', achievement_id=230))
 
 tn.close()
