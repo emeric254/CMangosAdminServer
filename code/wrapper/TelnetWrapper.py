@@ -138,7 +138,7 @@ class TelnetWrapper:
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
-                'id': account_id.strip(),
+                'id': int(account_id),
                 'username': username.strip(),
                 'character': character.strip(),
                 'ip': ip.strip(),
@@ -164,7 +164,7 @@ class TelnetWrapper:
                 'name': char_name.strip(),
                 'race': char_race.strip(),
                 'class': char_class.strip(),
-                'level': char_level.strip()
+                'level': int(char_level)
             }
         return characters
 
@@ -240,7 +240,7 @@ class TelnetWrapper:
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
-                'id': account_id.strip(),
+                'id': int(account_id),
                 'username': username.strip(),
                 'character': character.strip(),
                 'ip': ip.strip(),
@@ -263,7 +263,7 @@ class TelnetWrapper:
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
-                'id': account_id.strip(),
+                'id': int(account_id),
                 'username': username.strip(),
                 'character': character.strip(),
                 'ip': ip.strip(),
@@ -286,7 +286,7 @@ class TelnetWrapper:
         for account in result:
             (account_id, username, character, ip, gm, expansion) = account[1:-1].split("|")
             accounts[account_id.strip()] = {
-                'id': account_id.strip(),
+                'id': int(account_id),
                 'username': username.strip(),
                 'character': character.strip(),
                 'ip': ip.strip(),
@@ -309,17 +309,22 @@ class TelnetWrapper:
             return None
         result = result.split('\\n')
         (a_id, a_name) = result[0].split(' - ', maxsplit=1)
+        (a_name, a_lang) = a_name.rsplit(' ', maxsplit=1)
         achievement = {
-            'id': a_id,
+            'id': int(a_id),
             'name': a_name,
+            'lang': a_lang,
             'criteria': {}
         }
         if len(result) > 1:
             for crit in result[2:-1]:
                 (a_id, a_name) = crit.split(' - ', maxsplit=1)
-                achievement['criteria'][a_id] = {
-                    'id': a_id,
-                    'name': a_name
+                (a_name, a_lang, a_qt) = a_name.strip().rsplit(' ', maxsplit=2)
+                achievement['criteria'][int(a_id)] = {
+                    'id': int(a_id),
+                    'name': a_name,
+                    'lang': a_lang,
+                    'quantity': int(a_qt.replace('[', '').replace(']', ''))
                 }
         return achievement
 
@@ -337,9 +342,11 @@ class TelnetWrapper:
         ach_list = []
         for ach in result:
             (a_id, a_name) = ach.split(' - ', maxsplit=1)
+            (a_name, a_lang) = a_name.rsplit(' ', maxsplit=1)
             ach_list.append({
-                'id': a_id,
-                'name': a_name
+                'id': int(a_id),
+                'name': a_name,
+                'lang': a_lang,
             })
         return ach_list
 
@@ -446,8 +453,71 @@ class TelnetWrapper:
         if detailed:
             command += 'all '
         command += ' \n'
-        result = self.execute_command(command)
-        return result  # TODO
+        result = self.execute_command(command).split('\\n')[3:]
+        counts = result[0].split('|')[2:-1]
+        ratios = result[1].split('|')[2:-1]
+        greys = result[5].split('|')[2:-1]
+        whites = result[6].split('|')[2:-1]
+        greens = result[7].split('|')[2:-1]
+        blues = result[8].split('|')[2:-1]
+        purples = result[9].split('|')[2:-1]
+        oranges = result[10].split('|')[2:-1]
+        yellows = result[11].split('|')[2:-1]
+        status = {
+            'alliance': {
+                'count': int(counts[0]),
+                'item ratio': {
+                    'value': int(ratios[0]),
+                    'grey': int(greys[0]),
+                    'white': int(whites[0]),
+                    'green': int(greens[0]),
+                    'blue': int(blues[0]),
+                    'purple': int(purples[0]),
+                    'orange': int(oranges[0]),
+                    'yellow': int(yellows[0])
+                }
+            },
+            'horde': {
+                'count': int(counts[1]),
+                'item ratio': {
+                    'value': int(ratios[1]),
+                    'grey': int(greys[1]),
+                    'white': int(whites[1]),
+                    'green': int(greens[1]),
+                    'blue': int(blues[1]),
+                    'purple': int(purples[1]),
+                    'orange': int(oranges[1]),
+                    'yellow': int(yellows[1])
+                }
+            },
+            'neutral': {
+                'count': int(counts[2]),
+                'item ratio': {
+                    'value': int(ratios[2]),
+                    'grey': int(greys[2]),
+                    'white': int(whites[2]),
+                    'green': int(greens[2]),
+                    'blue': int(blues[2]),
+                    'purple': int(purples[2]),
+                    'orange': int(oranges[2]),
+                    'yellow': int(yellows[2])
+                }
+            },
+            'total': {
+                'count': int(counts[3]),
+                'item ratio': {
+                    'value': int(ratios[3]),
+                    'grey': int(greys[3]),
+                    'white': int(whites[3]),
+                    'green': int(greens[3]),
+                    'blue': int(blues[3]),
+                    'purple': int(purples[3]),
+                    'orange': int(oranges[3]),
+                    'yellow': int(yellows[3])
+                }
+            }
+        }
+        return status
 
     def ahbot_reset_auction(self, force_all_rebuild: bool = False):
         """
@@ -2266,5 +2336,9 @@ print(tn.achievement_details(achievement_id=230))
 print(tn.achievement_search(achievement_name='cyclone'))
 
 print(tn.achievement_state('Petroska', achievement_id=230))
+
+print(tn.achievement_set_complete('Petroska', achievement_id=230))
+
+print(tn.achievement_remove('Petroska', achievement_id=230))
 
 tn.close()
