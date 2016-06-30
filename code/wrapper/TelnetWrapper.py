@@ -455,68 +455,69 @@ class TelnetWrapper:
         command += ' \n'
         result = self.execute_command(command).split('\\n')[3:]
         counts = result[0].split('|')[2:-1]
-        ratios = result[1].split('|')[2:-1]
-        greys = result[5].split('|')[2:-1]
-        whites = result[6].split('|')[2:-1]
-        greens = result[7].split('|')[2:-1]
-        blues = result[8].split('|')[2:-1]
-        purples = result[9].split('|')[2:-1]
-        oranges = result[10].split('|')[2:-1]
-        yellows = result[11].split('|')[2:-1]
         status = {
             'alliance': {
-                'count': int(counts[0]),
-                'item ratio': {
-                    'value': int(ratios[0]),
-                    'grey': int(greys[0]),
-                    'white': int(whites[0]),
-                    'green': int(greens[0]),
-                    'blue': int(blues[0]),
-                    'purple': int(purples[0]),
-                    'orange': int(oranges[0]),
-                    'yellow': int(yellows[0])
-                }
+                'count': int(counts[0])
             },
             'horde': {
-                'count': int(counts[1]),
-                'item ratio': {
-                    'value': int(ratios[1]),
-                    'grey': int(greys[1]),
-                    'white': int(whites[1]),
-                    'green': int(greens[1]),
-                    'blue': int(blues[1]),
-                    'purple': int(purples[1]),
-                    'orange': int(oranges[1]),
-                    'yellow': int(yellows[1])
-                }
+                'count': int(counts[1])
             },
             'neutral': {
-                'count': int(counts[2]),
-                'item ratio': {
-                    'value': int(ratios[2]),
-                    'grey': int(greys[2]),
-                    'white': int(whites[2]),
-                    'green': int(greens[2]),
-                    'blue': int(blues[2]),
-                    'purple': int(purples[2]),
-                    'orange': int(oranges[2]),
-                    'yellow': int(yellows[2])
-                }
+                'count': int(counts[2])
             },
             'total': {
-                'count': int(counts[3]),
-                'item ratio': {
-                    'value': int(ratios[3]),
-                    'grey': int(greys[3]),
-                    'white': int(whites[3]),
-                    'green': int(greens[3]),
-                    'blue': int(blues[3]),
-                    'purple': int(purples[3]),
-                    'orange': int(oranges[3]),
-                    'yellow': int(yellows[3])
-                }
+                'count': int(counts[3])
             }
         }
+        if detailed:
+            ratios = result[1].split('|')[2:-1]
+            greys = result[5].split('|')[2:-1]
+            whites = result[6].split('|')[2:-1]
+            greens = result[7].split('|')[2:-1]
+            blues = result[8].split('|')[2:-1]
+            purples = result[9].split('|')[2:-1]
+            oranges = result[10].split('|')[2:-1]
+            yellows = result[11].split('|')[2:-1]
+            status['alliance']['item ratio'] = {
+                'value': int(ratios[0]),
+                'grey': int(greys[0]),
+                'white': int(whites[0]),
+                'green': int(greens[0]),
+                'blue': int(blues[0]),
+                'purple': int(purples[0]),
+                'orange': int(oranges[0]),
+                'yellow': int(yellows[0])
+            }
+            status['horde']['item ratio'] = {
+                'value': int(ratios[1]),
+                'grey': int(greys[1]),
+                'white': int(whites[1]),
+                'green': int(greens[1]),
+                'blue': int(blues[1]),
+                'purple': int(purples[1]),
+                'orange': int(oranges[1]),
+                'yellow': int(yellows[1])
+            }
+            status['neutral']['item ratio'] = {
+                'value': int(ratios[2]),
+                'grey': int(greys[2]),
+                'white': int(whites[2]),
+                'green': int(greens[2]),
+                'blue': int(blues[2]),
+                'purple': int(purples[2]),
+                'orange': int(oranges[2]),
+                'yellow': int(yellows[2])
+            }
+            status['total']['item ratio'] = {
+                'value': int(ratios[3]),
+                'grey': int(greys[3]),
+                'white': int(whites[3]),
+                'green': int(greens[3]),
+                'blue': int(blues[3]),
+                'purple': int(purples[3]),
+                'orange': int(oranges[3]),
+                'yellow': int(yellows[3])
+            }
         return status
 
     def ahbot_reset_auction(self, force_all_rebuild: bool = False):
@@ -530,8 +531,8 @@ class TelnetWrapper:
         if force_all_rebuild:
             command += 'all '
         command += ' \n'
-        result = self.execute_command(command)
-        return result  # TODO
+        self.execute_command(command)
+        return True  # always True
 
     def ahbot_set_all_quota(self, grey_items: int, white_items: int, green_items: int,
                             blue_items: int, purple_items: int, orange_items: int, yellow_items: int):
@@ -550,7 +551,13 @@ class TelnetWrapper:
         result = self.execute_command('ahbot items amount ' + str(grey_items) + ' ' + str(white_items) +
                                       ' ' + str(green_items) + ' ' + str(blue_items) + ' ' + str(purple_items) +
                                       ' ' + str(orange_items) + ' ' + str(yellow_items) + ' \n')
-        return result  # TODO
+        return 'Amount of Grey items is set to ' in result \
+               and 'Amount of White items is set to ' in result \
+               and 'Amount of Green items is set to ' in result \
+               and 'Amount of Blue items is set to ' in result \
+               and 'Amount of Purple items is set to ' in result \
+               and 'Amount of Orange items is set to ' in result \
+               and 'Amount of Yellow items is set to ' in result
 
     def ahbot_set_grey_quota(self, grey_items: int):
         """
@@ -560,7 +567,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ahbot items amount grey ' + str(grey_items) + ' \n')
-        return result  # TODO
+        return 'Amount of Grey items is set to ' in result
 
     def ahbot_set_white_quota(self, white_items: int):
         """
@@ -570,7 +577,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ahbot items amount white ' + str(white_items) + ' \n')
-        return result  # TODO
+        return 'Amount of White items is set to ' in result
 
     def ahbot_set_green_quota(self, green_items: int):
         """
@@ -580,7 +587,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ahbot items amount green ' + str(green_items) + ' \n')
-        return result  # TODO
+        return 'Amount of Green items is set to ' in result
 
     def ahbot_set_blue_quota(self, blue_items: int):
         """
@@ -590,7 +597,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ahbot items amount blue ' + str(blue_items) + ' \n')
-        return result  # TODO
+        return 'Amount of Blue items is set to ' in result
 
     def ahbot_set_purple_quota(self, purple_items: int):
         """
@@ -600,7 +607,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ahbot items amount purple ' + str(purple_items) + ' \n')
-        return result  # TODO
+        return 'Amount of Purple items is set to ' in result
 
     def ahbot_set_orange_quota(self, orange_items: int):
         """
@@ -610,7 +617,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ahbot items amount orange ' + str(orange_items) + ' \n')
-        return result  # TODO
+        return 'Amount of Orange items is set to ' in result
 
     def ahbot_set_yellow_quota(self, yellow_items: int):
         """
@@ -620,7 +627,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ahbot items amount yellow ' + str(yellow_items) + ' \n')
-        return result  # TODO
+        return 'Amount of Yellow items is set to ' in result
 
     def ahbot_set_ratios(self, alliance_ratio: int, horde_ratio: int, neutral_ratio: int):
         """
@@ -633,7 +640,9 @@ class TelnetWrapper:
         """
         result = self.execute_command('ahbot items ratio ' + str(alliance_ratio) +
                                       ' ' + str(horde_ratio) + ' ' + str(neutral_ratio) + ' \n')
-        return result  # TODO
+        return 'Items ratio for Alliance is set to ' in result \
+               and 'Items ratio for Horde is set to ' in result \
+               and 'Items ratio for Neutral is set to ' in result
 
     def ahbot_set_alliance_ratio(self, alliance_ratio: int):
         """
@@ -643,7 +652,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ahbot items ratio alliance ' + str(alliance_ratio) + ' \n')
-        return result  # TODO
+        return 'Items ratio for Alliance is set to ' in result
 
     def ahbot_set_horde_ratio(self, horde_ratio: int):
         """
@@ -653,7 +662,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ahbot items ratio horde ' + str(horde_ratio) + ' \n')
-        return result  # TODO
+        return 'Items ratio for Horde is set to ' in result
 
     def ahbot_set_neutral_ratio(self, neutral_ratio: int):
         """
@@ -663,43 +672,17 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ahbot items ratio neutral ' + str(neutral_ratio) + ' \n')
-        return result  # TODO
+        return 'Items ratio for Neutral is set to ' in result
 
 # Auction commands -----------------------------------------------------------------------------------------------------
 
-    def auction_show_alliance(self):
-        """
-        Show alliance auction list.
-
-        :return: alliance auction list
-        """
-        result = self.execute_command('auction alliance \n')
-        return result  # TODO
-
-    def auction_show_horde(self):
-        """
-        Show horde auction list.
-
-        :return: horde auction list
-        """
-        result = self.execute_command('auction horde \n')
-        return result  # TODO
-
-    def auction_show_goblin(self):
-        """
-        Show goblin auction list.
-
-        :return: goblin auction list
-        """
-        result = self.execute_command('auction goblin \n')
-        return result  # TODO
-
-    def auction_add_item_alliance(self, item_id: int, item_count: int = 1, min_bid: int = 1, buy_out: int = None,
+    def auction_add_item_alliance(self, item_id: int, buy_out: int, min_bid: int, item_count: int = 1,
                                   long_duration: bool = False, very_long_duration: bool = False):
         # TODO DOC
         command = 'auction item alliance ' + str(item_id) + ':' + str(item_count) + ' '
-        if buy_out:
-            command += str(min_bid) + ' ' + str(buy_out) + ' '
+        if min_bid:
+            command += str(min_bid) + ' '
+        command += str(buy_out) + ' '
         if long_duration:
             if very_long_duration:
                 command += 'very'
@@ -708,14 +691,15 @@ class TelnetWrapper:
             command += 'short'
         command += ' \n'
         result = self.execute_command(command)
-        return result  # TODO
+        return 'mangos>' == result
 
-    def auction_add_item_horde(self, item_id: int, item_count: int = 1, min_bid: int = 1, buy_out: int = None,
+    def auction_add_item_horde(self, item_id: int, buy_out: int, min_bid: int, item_count: int = 1,
                                long_duration: bool = False, very_long_duration: bool = False):
         # TODO DOC
         command = 'auction item horde ' + str(item_id) + ':' + str(item_count) + ' '
-        if buy_out:
-            command += str(min_bid) + ' ' + str(buy_out) + ' '
+        if min_bid:
+            command += str(min_bid) + ' '
+        command += str(buy_out) + ' '
         if long_duration:
             if very_long_duration:
                 command += 'very'
@@ -724,14 +708,15 @@ class TelnetWrapper:
             command += 'short'
         command += ' \n'
         result = self.execute_command(command)
-        return result  # TODO
+        return 'mangos>' == result
 
-    def auction_add_item_goblin(self, item_id: int, item_count: int = 1, min_bid: int = 1, buy_out: int = None,
+    def auction_add_item_goblin(self, item_id: int, buy_out: int, min_bid: int, item_count: int = 1,
                                 long_duration: bool = False, very_long_duration: bool = False):
         # TODO DOC
         command = 'auction item goblin ' + str(item_id) + ':' + str(item_count) + ' '
-        if buy_out:
-            command += str(min_bid) + ' ' + str(buy_out) + ' '
+        if min_bid:
+            command += str(min_bid) + ' '
+        command += str(buy_out) + ' '
         if long_duration:
             if very_long_duration:
                 command += 'very'
@@ -740,7 +725,7 @@ class TelnetWrapper:
             command += 'short'
         command += ' \n'
         result = self.execute_command(command)
-        return result  # TODO
+        return 'mangos>' == result
 
 # Ban commands ---------------------------------------------------------------------------------------------------------
 
@@ -907,7 +892,37 @@ class TelnetWrapper:
         :return: character information
         """
         result = self.execute_command('pinfo ' + character + ' \n')
-        return result  # TODO
+        if 'Player not found!' in result:
+            return None
+        result = result.split('\\n')
+        (character_name, result[0]) = result[0][7:].split(' (guid: ', maxsplit=1)
+        (guid, result[0]) = result[0].split(') Account: ', maxsplit=1)
+        (username, result[0]) = result[0].split(' (id: ', maxsplit=1)
+        (user_id, result[0]) = result[0].split(') GMLevel: ', maxsplit=1)
+        (gm_level, result[0]) = result[0].split(' Last IP: ', maxsplit=1)
+        (last_ip, result[0]) = result[0].split(' Last login: ', maxsplit=1)
+        (last_login, latency) = result[0].split(' Latency: ', maxsplit=1)
+        (played_time, result[1]) = result[1].split(' Level: ', maxsplit=1)
+        (level, money) = result[1].split(' Money: ', maxsplit=1)
+        (gold, money) = money.split('g', maxsplit=1)
+        (silver, bronze) = money.split('s', maxsplit=1)
+        money = int(gold)*100*100 + int(silver)*100 + int(bronze[:-1])
+        character = {
+            'player': {
+                'name': username,
+                'id': user_id,
+                'gmlevel': int(gm_level),
+                'ip': last_ip,
+                'latency': int(latency[:-2])
+            },
+            'name': character_name,
+            'guid': int(guid),
+            'level': level,
+            'played time': played_time[13:],
+            'money': money,
+            'last login': last_login,
+        }
+        return character
 
     def character_achievements(self, character: str):
         """
@@ -916,8 +931,12 @@ class TelnetWrapper:
         :param character: target character
         :return: character achievement list
         """
-        result = self.execute_command('character achievements ' + character + ' \n')
-        return result  # TODO
+        result = self.execute_command('character achievements ' + character + ' \n').split('\\n')
+        achievements = []
+        for line in result:
+            # TODO
+            print(line)
+        return achievements
 
     def character_customize_at_next_login(self, character: str):
         """
@@ -928,7 +947,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('character customize ' + character + ' \n')
-        return result  # TODO
+        return 'Forced customize for player ' in result
 
     def character_rename_at_next_login(self, character: str):
         """
@@ -939,12 +958,13 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('character rename ' + character + ' \n')
-        return result  # TODO
+        return 'Forced rename for player ' in result
 
     def character_delete(self, character: str):
         """
         Delete a character.
 
+        Warning you can't do that if the character is online ! (crash)
         :param character: target character
         :return: True on success, Flase otherwise
         """
@@ -990,18 +1010,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('character level ' + character + ' ' + str(level) + ' \n')
-        return result  # TODO
-
-    def character_levelup(self, character: str, level: int = 1):
-        """
-        Make a character level up.
-
-        :param character: target character
-        :param level: number of level
-        :return: True on success, False otherwise
-        """
-        result = self.execute_command('levelup ' + character + ' ' + str(level) + ' \n')
-        return result  # TODO
+        return 'You changed level of ' in result
 
     def character_mute(self, character: str, duration: int = 1):
         """
@@ -1064,8 +1073,8 @@ class TelnetWrapper:
         How old value will be read from CMaNGOS server configuration
         :return: True on success, False otherwise
         """
-        result = self.execute_command('character deleted old \n')
-        return result  # TODO
+        self.execute_command('character deleted old \n')
+        return True  # always True
 
     def character_delete_deleted_older_than(self, days: int):
         """
@@ -1084,6 +1093,8 @@ class TelnetWrapper:
         :return: deleted character list
         """
         result = self.execute_command('character deleted list \n')
+        if 'No characters found.':
+            return []
         return result  # TODO
 
     def character_search_deleted_list(self, character: str):
@@ -1094,6 +1105,8 @@ class TelnetWrapper:
         :return: found character list
         """
         result = self.execute_command('character deleted list ' + character + ' \n')
+        if 'No characters found.':
+            return []
         return result  # TODO
 
     def character_search_from_name(self, character: str, limit: int = 100):
@@ -1136,8 +1149,8 @@ class TelnetWrapper:
         :param character: target character
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reset achievements ' + character + ' \n')
-        return result  # TODO
+        self.execute_command('reset achievements ' + character + ' \n')
+        return True  # always True
 
     def character_reset_honor(self, character: str):
         """
@@ -1146,8 +1159,8 @@ class TelnetWrapper:
         :param character: target character
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reset honor ' + character + ' \n')
-        return result  # TODO
+        self.execute_command('reset honor ' + character + ' \n')
+        return True  # always True
 
     def character_reset_level(self, character: str):
         """
@@ -1156,8 +1169,8 @@ class TelnetWrapper:
         :param character: target character
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reset level ' + character + ' \n')
-        return result  # TODO
+        self.execute_command('reset level ' + character + ' \n')
+        return True  # always True
 
     def character_reset_specs(self, character: str):
         """
@@ -1167,7 +1180,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('reset specs ' + character + ' \n')
-        return result  # TODO
+        return 'Talents of Trololol reset.' in result
 
     def character_reset_spells(self, character: str):
         """
@@ -1177,7 +1190,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('reset spells ' + character + ' \n')
-        return result  # TODO
+        return 'Spells of Trololol reset.' in result
 
     def character_reset_stats(self, character: str):
         """
@@ -1186,8 +1199,8 @@ class TelnetWrapper:
         :param character: target character
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reset stats ' + character + ' \n')
-        return result  # TODO
+        self.execute_command('reset stats ' + character + ' \n')
+        return True  # always True
 
     def character_reset_talents(self, character: str):
         """
@@ -1197,7 +1210,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('reset talents ' + character + ' \n')
-        return result  # TODO
+        return 'Talents of Trololol reset.' in result
 
     def character_all_reset_spells(self):
         """
@@ -1206,7 +1219,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('reset all spells \n')
-        return result  # TODO
+        return 'Spells will reset for all players at login.' in result
 
     def character_all_reset_talents(self):
         """
@@ -1215,7 +1228,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('reset all talents \n')
-        return result  # TODO
+        return 'Talents will reset for all players at login.' in result
 
 # Debug commands -------------------------------------------------------------------------------------------------------
 
@@ -1762,7 +1775,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('saveall \n')
-        return result  # TODO
+        return 'All players saved.' in result
 
     def server_idle_restart(self, delay: int = 1):
         """
@@ -1771,8 +1784,8 @@ class TelnetWrapper:
         :param delay: idle time before restart
         :return: True on success, False otherwise
         """
-        result = self.execute_command('server idlerestart ' + str(delay) + ' \n')
-        return result  # TODO
+        self.execute_command('server idlerestart ' + str(delay) + ' \n')
+        return True  # always True
 
     def server_cancel_idle_restart(self):
         """
@@ -1780,8 +1793,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('server idlerestart cancel \n')
-        return result  # TODO
+        self.execute_command('server idlerestart cancel \n')
+        return True  # always True
 
     def server_idle_shutdown(self, delay: int = 1):
         """
@@ -1790,8 +1803,8 @@ class TelnetWrapper:
         :param delay: idle time before shutdown
         :return: True on success, False otherwise
         """
-        result = self.execute_command('server idleshutdown ' + str(delay) + ' \n')
-        return result  # TODO
+        self.execute_command('server idleshutdown ' + str(delay) + ' \n')
+        return True  # always True
 
     def server_cancel_idle_shutdown(self):
         """
@@ -1799,8 +1812,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('server idleshutdown cancel \n')
-        return result  # TODO
+        self.execute_command('server idleshutdown cancel \n')
+        return True  # always True
 
     def server_get_infos(self):
         """
@@ -1882,8 +1895,8 @@ class TelnetWrapper:
         :param delay: delay before restart
         :return: True on success, False otherwise
         """
-        result = self.execute_command('server restart ' + str(delay) + ' \n')
-        return result  # TODO
+        self.execute_command('server restart ' + str(delay) + ' \n')
+        return True  # always True
 
     def server_cancel_restart(self):
         """
@@ -1891,8 +1904,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('server restart cancel \n')
-        return result  # TODO
+        self.execute_command('server restart cancel \n')
+        return True  # always True
 
     def server_exit(self):
         """
@@ -1910,8 +1923,8 @@ class TelnetWrapper:
         :param delay: delay before shutdown
         :return: True on success, False otherwise
         """
-        result = self.execute_command('server shutdown ' + str(delay) + ' \n')
-        return result  # TODO
+        self.execute_command('server shutdown ' + str(delay) + ' \n')
+        return True  # always True
 
     def server_cancel_shutdown(self):
         """
@@ -1919,8 +1932,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('server shutdown cancel \n')
-        return result  # TODO
+        self.execute_command('server shutdown cancel \n')
+        return True  # always True
 
     def server_check_expired_corpses(self):
         """
@@ -1928,8 +1941,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('server corpses \n')
-        return result  # TODO
+        self.execute_command('server corpses \n')
+        return True  # always True
 
     def server_reload_config(self):
         """
@@ -1937,8 +1950,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload config \n')
-        return result  # TODO
+        self.execute_command('reload config \n')
+        return True  # always True
 
     def server_reload_all(self):
         """
@@ -1946,8 +1959,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload all \n')
-        return result  # TODO
+        self.execute_command('reload all \n')
+        return True  # always True
 
     def server_reload_achievements(self):
         """
@@ -1955,8 +1968,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload all_achievement \n')
-        return result  # TODO
+        self.execute_command('reload all_achievement \n')
+        return True  # always True
 
     def server_reload_areas(self):
         """
@@ -1964,8 +1977,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload all_area \n')
-        return result  # TODO
+        self.execute_command('reload all_area \n')
+        return True  # always True
 
     def server_reload_eventais(self):
         """
@@ -1973,8 +1986,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload all_eventai \n')
-        return result  # TODO
+        self.execute_command('reload all_eventai \n')
+        return True  # always True
 
     def server_reload_items(self):
         """
@@ -1982,8 +1995,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload all_item \n')
-        return result  # TODO
+        self.execute_command('reload all_item \n')
+        return True  # always True
 
     def server_reload_locales(self):
         """
@@ -1991,8 +2004,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload all_locales \n')
-        return result  # TODO
+        self.execute_command('reload all_locales \n')
+        return True  # always True
 
     def server_reload_loots(self):
         """
@@ -2000,8 +2013,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload all_loot \n')
-        return result  # TODO
+        self.execute_command('reload all_loot \n')
+        return True  # always True
 
     def server_reload_npcs(self):
         """
@@ -2009,8 +2022,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload all_npc \n')
-        return result  # TODO
+        self.execute_command('reload all_npc \n')
+        return True  # always True
 
     def server_reload_quests(self):
         """
@@ -2018,8 +2031,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload all_quest \n')
-        return result  # TODO
+        self.execute_command('reload all_quest \n')
+        return True  # always True
 
     def server_reload_scripts(self):
         """
@@ -2027,8 +2040,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload all_script \n')
-        return result  # TODO
+        self.execute_command('reload all_script \n')
+        return True  # always True
 
     def server_reload_spells(self):
         """
@@ -2036,8 +2049,8 @@ class TelnetWrapper:
 
         :return: True on success, False otherwise
         """
-        result = self.execute_command('reload all_spell \n')
-        return result  # TODO
+        self.execute_command('reload all_spell \n')
+        return True  # always True
 
     def server_show_player_limits(self):
         """
@@ -2046,53 +2059,88 @@ class TelnetWrapper:
         :return: server player limit number
         """
         result = self.execute_command('server plimit \n')
-        return result  # TODO
+        (amount, min_level) = result.split('\\n', maxsplit=1)[0].split(', min. security level ', maxsplit=1)
+        limits = {
+            'amount': int(amount[22:]),
+            'access level': min_level[:-1]
+        }
+        return limits
 
     def server_set_player_number_limit(self, number: int):
         """
         Set server player limit number.
 
+        This function is necessary after a permission level restriction change
         :param number: target new limit of player number
         :return: True on success, False otherwise
         """
         result = self.execute_command('server plimit ' + str(number) + ' \n')
-        return result  # TODO
+        (amount, min_level) = result.split('\\n', maxsplit=1)[0].split(', min. security level ', maxsplit=1)
+        limits = {
+            'amount': int(amount[22:]),
+            'access level': min_level[:-1]
+        }
+        return limits
 
     def server_set_player_restrict_limit(self):
         """
         Request server to restrict connection at player right level.
 
+        WARNING : This action reset player number limit to 0 ! (no limit)
         :return: True on success, False otherwise
         """
         result = self.execute_command('server plimit player \n')
-        return result  # TODO
+        (amount, min_level) = result.split('\\n', maxsplit=1)[0].split(', min. security level ', maxsplit=1)
+        limits = {
+            'amount': int(amount[22:]),
+            'access level': min_level[:-1]
+        }
+        return limits
 
     def server_set_moderator_restrict_limit(self):
         """
         Request server to restrict connection at moderator right level.
 
+        WARNING : This action reset player number limit to 0 ! (no limit)
         :return: True on success, False otherwise
         """
         result = self.execute_command('server plimit moderator \n')
-        return result  # TODO
+        (amount, min_level) = result.split('\\n', maxsplit=1)[0].split(', min. security level ', maxsplit=1)
+        limits = {
+            'amount': int(amount[22:]),
+            'access level': min_level[:-1]
+        }
+        return limits
 
     def server_set_gamemaster_restrict_limit(self):
         """
         Request server to restrict connection at game master right level.
 
+        WARNING : This action reset player number limit to 0 ! (no limit)
         :return: True on success, False otherwise
         """
         result = self.execute_command('server plimit gamemaster \n')
-        return result  # TODO
+        (amount, min_level) = result.split('\\n', maxsplit=1)[0].split(', min. security level ', maxsplit=1)
+        limits = {
+            'amount': int(amount[22:]),
+            'access level': min_level[:-1]
+        }
+        return limits
 
     def server_set_administrator_restrict_limit(self):
         """
         Request server to restrict connection at administrator right level.
 
+        WARNING : This action reset player number limit to 0 ! (no limit)
         :return: True on success, False otherwise
         """
         result = self.execute_command('server plimit administrator \n')
-        return result  # TODO
+        (amount, min_level) = result.split('\\n', maxsplit=1)[0].split(', min. security level ', maxsplit=1)
+        limits = {
+            'amount': int(amount[22:]),
+            'access level': min_level[:-1]
+        }
+        return limits
 
     def server_reset_player_limits(self):
         """
@@ -2101,7 +2149,12 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('server plimit reset \n')
-        return result  # TODO
+        (amount, min_level) = result.split('\\n', maxsplit=1)[0].split(', min. security level ', maxsplit=1)
+        limits = {
+            'amount': int(amount[22:]),
+            'access level': min_level[:-1]
+        }
+        return limits
 
     def server_load_scripts(self, script_library_name: str):
         """
@@ -2327,13 +2380,15 @@ class TelnetWrapper:
 # Test zone :
 tn = TelnetWrapper(host='10.0.0.125', port='3443', user='administrator', pwd='administrator')
 
-tn.character_get_infos('Petroska')
+print(tn.character_achievements('trololol'))
 
-print(tn.ahbot_status(True))
+print(tn.character_get_reputation('trololol'))
 
-print(tn.achievement_details(achievement_id=230))
+print(tn.character_deleted_list())
 
-print(tn.achievement_search(achievement_name='cyclone'))
+print(tn.character_delete_deleted('yolo'))
+
+print(tn.character_search_deleted_list('yolo'))
 
 print(tn.achievement_state('Petroska', achievement_id=230))
 
