@@ -739,7 +739,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ban account ' + username + ' ' + bantime + ' ' + reason + ' \n')
-        return result  # TODO
+        return 'is banned ' in result
 
     def ban_character(self, character: str, reason: str, bantime: str = '-1'):
         """
@@ -751,7 +751,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ban character ' + character + ' ' + bantime + ' ' + reason + ' \n')
-        return result  # TODO
+        return 'is banned ' in result
 
     def ban_ip(self, ip_addr: str, reason: str, bantime: str = '-1'):
         """
@@ -763,7 +763,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('ban ip ' + ip_addr + ' ' + bantime + ' ' + reason + ' \n')
-        return result  # TODO
+        return 'is banned ' in result
 
     def ban_info_account(self, username: str):
         """
@@ -860,7 +860,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('unban account ' + username + ' \n')
-        return result  # TODO
+        return 'unbanned.' in result
 
     def unban_character(self, character: str):
         """
@@ -870,7 +870,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('unban character ' + character + ' \n')
-        return result  # TODO
+        return 'unbanned.' in result
 
     def unban_ip(self, ip_addr: str):
         """
@@ -880,7 +880,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('unban ip ' + ip_addr + ' \n')
-        return result  # TODO
+        return 'unbanned.' in result
 
 # Character commands ---------------------------------------------------------------------------------------------------
 
@@ -2397,3 +2397,4 @@ print(tn.achievement_set_complete('Petroska', achievement_id=230))
 print(tn.achievement_remove('Petroska', achievement_id=230))
 
 tn.close()
+c
