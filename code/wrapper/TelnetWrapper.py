@@ -359,6 +359,8 @@ class TelnetWrapper:
         :return: this achievement state for the target character
         """
         result = self.execute_command('achievement ' + character + ' ' + str(achievement_id) + ' \n')
+        if 'Player not found!' in result:
+            return None  # TODO
         return result  # TODO
 
     def achievement_set_complete(self, character: str, achievement_id: int):
@@ -370,6 +372,8 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('achievement add ' + character + ' ' + str(achievement_id) + ' \n')
+        if 'Player not found!' in result:
+            return False
         return result  # TODO
 
     def achievement_remove(self, character: str, achievement_id: int):
@@ -381,6 +385,8 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('achievement remove ' + character + ' ' + str(achievement_id) + ' \n')
+        if 'Player not found!' in result:
+            return False
         return result  # TODO
 
     def achievement_criteria_set_complete_progress(self, character: str, criteria_id: int):
@@ -392,6 +398,8 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('achievement criteria add ' + character + ' ' + str(criteria_id) + ' \n')
+        if 'Player not found!' in result:
+            return False
         return result  # TODO
 
     def achievement_criteria_add_progress(self, character: str, criteria_id: int, change: int):
@@ -405,6 +413,8 @@ class TelnetWrapper:
         """
         result = self.execute_command('achievement criteria add ' + character +
                                       ' ' + str(criteria_id) + ' ' + str(change) + ' \n')
+        if 'Player not found!' in result:
+            return False
         return result  # TODO
 
     def achievement_criteria_reset_progress(self, character: str, criteria_id: int):
@@ -416,6 +426,8 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('achievement criteria remove ' + character + ' ' + str(criteria_id) + ' \n')
+        if 'Player not found!' in result:
+            return False
         return result  # TODO
 
     def achievement_criteria_reduce_progress(self, character: str, criteria_id: int, change: int):
@@ -429,6 +441,8 @@ class TelnetWrapper:
         """
         result = self.execute_command('achievement criteria remove ' + character +
                                       ' ' + str(criteria_id) + ' ' + str(change) + ' \n')
+        if 'Player not found!' in result:
+            return False
         return result  # TODO
 
 # AHBot commands -------------------------------------------------------------------------------------------------------
@@ -676,9 +690,21 @@ class TelnetWrapper:
 
 # Auction commands -----------------------------------------------------------------------------------------------------
 
+# TODO add other commands ?
+
     def auction_add_item_alliance(self, item_id: int, buy_out: int, min_bid: int, item_count: int = 1,
                                   long_duration: bool = False, very_long_duration: bool = False):
-        # TODO DOC
+        """
+        Create an item auction in alliance store.
+
+        :param item_id: item id
+        :param buy_out: instant buy price
+        :param min_bid: minimum bid
+        :param item_count: number of this item
+        :param long_duration: set a long duration
+        :param very_long_duration: set more than a long duration (use it with "long_duration" parameter)
+        :return: True on success, False otherwise
+        """
         command = 'auction item alliance ' + str(item_id) + ':' + str(item_count) + ' '
         if min_bid:
             command += str(min_bid) + ' '
@@ -695,7 +721,17 @@ class TelnetWrapper:
 
     def auction_add_item_horde(self, item_id: int, buy_out: int, min_bid: int, item_count: int = 1,
                                long_duration: bool = False, very_long_duration: bool = False):
-        # TODO DOC
+        """
+        Create an item auction in horde store.
+
+        :param item_id: item id
+        :param buy_out: instant buy price
+        :param min_bid: minimum bid
+        :param item_count: number of this item
+        :param long_duration: set a long duration
+        :param very_long_duration: set more than a long duration (use it with "long_duration" parameter)
+        :return: True on success, False otherwise
+        """
         command = 'auction item horde ' + str(item_id) + ':' + str(item_count) + ' '
         if min_bid:
             command += str(min_bid) + ' '
@@ -712,7 +748,17 @@ class TelnetWrapper:
 
     def auction_add_item_goblin(self, item_id: int, buy_out: int, min_bid: int, item_count: int = 1,
                                 long_duration: bool = False, very_long_duration: bool = False):
-        # TODO DOC
+        """
+        Create an item auction in goblin store.
+
+        :param item_id: item id
+        :param buy_out: instant buy price
+        :param min_bid: minimum bid
+        :param item_count: number of this item
+        :param long_duration: set a long duration
+        :param very_long_duration: set more than a long duration (use it with "long_duration" parameter)
+        :return: True on success, False otherwise
+        """
         command = 'auction item goblin ' + str(item_id) + ':' + str(item_count) + ' '
         if min_bid:
             command += str(min_bid) + ' '
@@ -991,16 +1037,6 @@ class TelnetWrapper:
         result = self.execute_command('character titles ' + character + ' \n')
         return result  # TODO
 
-    def character_stop_combat(self, character: str):
-        """
-        Stop combat for a character.
-
-        :param character: target character
-        :return: True on success, False otherwise
-        """
-        result = self.execute_command('combatstop ' + character + ' \n')
-        return result  # TODO
-
     def character_set_level(self, character: str, level: int = 0):
         """
         Set a character level.
@@ -1064,7 +1100,9 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('character deleted delete ' + character + ' \n')
-        return result  # TODO
+        if 'No characters found.':
+            return False  # no character found
+        return True  # at least one character found and permanently deleted
 
     def character_delete_deleted_old(self):
         """
@@ -2380,21 +2418,22 @@ class TelnetWrapper:
 # Test zone :
 tn = TelnetWrapper(host='10.0.0.125', port='3443', user='administrator', pwd='administrator')
 
-print(tn.character_achievements('trololol'))
+# print(tn.character_achievements('trololol'))
 
-print(tn.character_get_reputation('trololol'))
+# print(tn.character_get_reputation('trololol'))
 
 print(tn.character_deleted_list())
 
-print(tn.character_delete_deleted('yolo'))
+print(tn.character_get_reputation('Tetsetestes'))
+
+print(tn.character_get_titles('Tetsetestes'))
 
 print(tn.character_search_deleted_list('yolo'))
 
-print(tn.achievement_state('Petroska', achievement_id=230))
+print(tn.achievement_state('Tetsetestes', achievement_id=230))
 
-print(tn.achievement_set_complete('Petroska', achievement_id=230))
+print(tn.achievement_set_complete('Tetsetestes', achievement_id=2345690))
 
-print(tn.achievement_remove('Petroska', achievement_id=230))
+print(tn.achievement_remove('Tetsetestes', achievement_id=230))
 
 tn.close()
-c
