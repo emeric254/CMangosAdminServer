@@ -977,11 +977,21 @@ class TelnetWrapper:
         :param character: target character
         :return: character achievement list
         """
-        result = self.execute_command('character achievements ' + character + ' \n').split('\\n')
+        result = self.execute_command('character achievements ' + character + ' \n').split('\\n')[:-1]
         achievements = []
-        for line in result:
-            # TODO
-            print(line)
+        if 'Player not found!' not in result:
+            for line in result:
+                (cid, line) = line.split(' - ', maxsplit=1)
+                (line, date) = line.split(' [', maxsplit=1)
+                date = date[:-1]
+                (name, lang) = line.rsplit(' ', maxsplit=1)
+                temp = {
+                    'id': cid,
+                    'name': name,
+                    'lang': lang,
+                    'date': date
+                }
+                achievements.append(temp)
         return achievements
 
     def character_customize_at_next_login(self, character: str):
@@ -1025,6 +1035,8 @@ class TelnetWrapper:
         :return: character reputation
         """
         result = self.execute_command('character reputation ' + character + ' \n')
+        if 'Player not found!' not in result:
+            pass
         return result  # TODO
 
     def character_get_titles(self, character: str):
@@ -1100,7 +1112,7 @@ class TelnetWrapper:
         :return: True on success, False otherwise
         """
         result = self.execute_command('character deleted delete ' + character + ' \n')
-        if 'No characters found.':
+        if 'No characters found.' in result:
             return False  # no character found
         return True  # at least one character found and permanently deleted
 
@@ -1267,6 +1279,16 @@ class TelnetWrapper:
         """
         result = self.execute_command('reset all talents \n')
         return 'Talents will reset for all players at login.' in result
+
+    def character_kick(self, character: str):
+        """
+        Kick an online character from the world
+
+        :param character: character to kick
+        :return: True on success, False otherwise
+        """
+        result = self.execute_command('kick ' + character + ' \n')
+        return 'kicked.' in result
 
 # Debug commands -------------------------------------------------------------------------------------------------------
 
@@ -2343,20 +2365,37 @@ class TelnetWrapper:
 
 # TODO
 
-    def list_all_talents(self):
-        # TODO DOC
-        result = self.execute_command('list talents \n')
-        return result  # TODO
-
     def list_objects(self, object_id: int, limit: int = 10):
         # TODO DOC
         result = self.execute_command('list object ' + str(object_id) + ' ' + str(limit) + ' \n')
         return result  # TODO
 
     def list_items(self, item_id: int, limit: int = 10):
-        # TODO DOC
+        """
+        Get a listing about an item (counters)
+
+        :param item_id: item to look for
+        :param limit: maximum number of results
+        :return: listing for this item
+        """
         result = self.execute_command('list item ' + str(item_id) + ' ' + str(limit) + ' \n')
-        return result  # TODO
+        if 'Invalid item id' in result:
+            return []
+        result = result.split('\\n', maxsplit=1)[0]
+        (total, result) = result.split(' ( inventory ', maxsplit=1)
+        total = total.split(': ')[1]
+        (inventory, result) = result.split(' mail ', maxsplit=1)
+        (mail, result) = result.split(' auction ', maxsplit=1)
+        (auction, guild) = result.split(' guild ', maxsplit=1)
+        guild = guild[:-1]
+        item_listing = {
+            'total': int(total),
+            'inventory': inventory,  # TODO
+            'mail': mail,  # TODO
+            'auction': auction,  # TODO
+            'guild': guild  # TODO
+        }
+        return item_listing
 
     def list_creatures(self, creature_id: int, limit: int = 10):
         # TODO DOC
@@ -2388,22 +2427,6 @@ class TelnetWrapper:
         result = self.execute_command('tele name ' + character + ' ' + tele_name + ' \n')
         return result  # TODO
 
-    def whispers_gm_accept(self, activation: bool = True):
-        # TODO DOC
-        command = 'whispers '
-        if activation:
-            command += 'on '
-        else:
-            command += 'off '
-        command += ' \n'
-        result = self.execute_command(command)
-        return result  # TODO
-
-    def kick_character(self, character: str):
-        # TODO DOC
-        result = self.execute_command('kick ' + character + ' \n')
-        return result  # TODO
-
     def instance_get_infos(self):
         # TODO DOC
         result = self.execute_command('instance stats \n')
@@ -2418,22 +2441,22 @@ class TelnetWrapper:
 # Test zone :
 tn = TelnetWrapper(host='10.0.0.125', port='3443', user='administrator', pwd='administrator')
 
-# print(tn.character_achievements('trololol'))
+print(tn.character_achievements('arrandale'))
 
-# print(tn.character_get_reputation('trololol'))
+print(tn.character_get_reputation('arrandale'))
 
-print(tn.character_deleted_list())
-
-print(tn.character_get_reputation('Tetsetestes'))
-
-print(tn.character_get_titles('Tetsetestes'))
-
-print(tn.character_search_deleted_list('yolo'))
-
-print(tn.achievement_state('Tetsetestes', achievement_id=230))
-
-print(tn.achievement_set_complete('Tetsetestes', achievement_id=2345690))
-
-print(tn.achievement_remove('Tetsetestes', achievement_id=230))
+# print(tn.character_deleted_list())
+#
+# print(tn.character_get_reputation('Tetsetestes'))
+#
+# print(tn.character_get_titles('Tetsetestes'))
+#
+# print(tn.character_search_deleted_list('yolo'))
+#
+# print(tn.achievement_state('Tetsetestes', achievement_id=230))
+#
+# print(tn.achievement_set_complete('Tetsetestes', achievement_id=2345690))
+#
+# print(tn.achievement_remove('Tetsetestes', achievement_id=230))
 
 tn.close()
